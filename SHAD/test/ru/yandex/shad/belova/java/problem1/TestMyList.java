@@ -42,12 +42,6 @@ public class TestMyList {
     }
     
     @Test
-    public void testGetFromEmptyList(){
-        exception.expect(IndexOutOfBoundsException.class);
-        list.get(0);
-    }
-    
-    @Test
     public void testAdd(){
         list.add(1);
         assertArrayEquals("Fail in adding/getting 1", new Object[]{1}, list.toArray());
