@@ -2,7 +2,6 @@ package ru.yandex.shad.belova.java.problem1;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.NoSuchElementException;
 
@@ -35,14 +34,34 @@ public class TestMyQueue {
     
     @Test
     public void testPeek(){
-        //TODO
-        fail();
+        queue.offer(3);
+        queue.offer(10);
+        queue.offer(145);
+        queue.offer(-1);
+        assertEquals("Wrong element peeked", 3, queue.peek());
+        assertArrayEquals("Peek have changed array", new Object[]{3,10,145,-1}, queue.toArray());
+    }
+    
+    @Test
+    public void testPeekException(){
+        exception.expect(NoSuchElementException.class);
+        queue.peek();
     }
     
     @Test
     public void testPoll(){
-        //TODO
-        fail();
+        queue.offer(3);
+        queue.offer(10);
+        queue.offer(145);
+        queue.offer(-1);
+        assertEquals("Wrong element polled", 3, queue.peek());
+        assertArrayEquals("Peek have changed array in wrong way", new Object[]{10,145,-1}, queue.toArray());
+    }
+    
+    @Test
+    public void testPollException(){
+        exception.expect(NoSuchElementException.class);
+        queue.poll();
     }
     
 }
