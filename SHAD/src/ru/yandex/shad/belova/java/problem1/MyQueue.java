@@ -1,6 +1,6 @@
 package ru.yandex.shad.belova.java.problem1;
 
-public class MyQueue extends MyLinkedList {
+public class MyQueue {
     private MyLinkedList list;
     
     public MyQueue(){
