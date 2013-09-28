@@ -80,7 +80,7 @@ public class TestSort {
      return testData;
    }
    @Test
-   public void testInsertionSort() {
+   public void testSort() {
      MyCollection.sort(given);
      assertArrayEquals("Fail in sorting: ", this.result.toArray(), this.given.toArray());
    }
