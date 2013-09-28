@@ -27,12 +27,18 @@ public class TestMyLinkedList {
     
     @Test
     public void testAddFirst(){
-        fail();
+        list.addFirst(1);
+        assertArrayEquals("Fail adding to empty list", new Object[]{1}, list.toArray());
+        list.addFirst(4);
+        assertArrayEquals("Fail adding to list", new Object[]{4,1}, list.toArray());
     }
     
     @Test
     public void testAddLast(){
-        fail();
+        list.addLast(1);
+        assertArrayEquals("Fail adding to empty list", new Object[]{1}, list.toArray());
+        list.addLast(4);
+        assertArrayEquals("Fail adding to list", new Object[]{1,4}, list.toArray());
     }
     
     @Test
