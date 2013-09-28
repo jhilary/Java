@@ -7,6 +7,14 @@ public class MyArrayList implements IMyList{
 	private int last = -1;
 	private int size = 0;
 	
+	public MyArrayList(){
+	    //TODO
+	}
+	
+	public MyArrayList(int initialCapacity){
+	    //TODO
+	}
+	
 	@Override
 	public void add(Object e) {
 
