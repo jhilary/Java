@@ -14,23 +14,21 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(value = JUnit4.class)
-public class TestMyQueue {
-    private MyQueue queue;
+public class TestMyStack {
+    private MyStack stack;
 
     @Before
     public void setUp(){
-        queue = new MyQueue();
+        stack = new MyStack();
     }
     
     @Rule
     public ExpectedException exception = ExpectedException.none();
     
     @Test
-    public void testOffer(){
-        queue.offer(2);
-        assertArrayEquals("Fail offering in empty queue", new Object[]{2}, queue.toArray());
-        queue.offer(4);
-        assertArrayEquals("Fail offering in queue", new Object[]{2,4}, queue.toArray());
+    public void testPush(){
+        //TODO
+        fail();
     }
     
     @Test
@@ -40,10 +38,9 @@ public class TestMyQueue {
     }
     
     @Test
-    public void testPoll(){
+    public void testPop(){
         //TODO
         fail();
     }
     
 }
-
