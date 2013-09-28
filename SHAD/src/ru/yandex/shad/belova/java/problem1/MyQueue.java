@@ -19,4 +19,9 @@ public class MyQueue {
         //TODO
         return new Object();
     }
+    
+    public Object[] toArray(){
+        //TODO
+        return new Object[]{};
+    }
 }
