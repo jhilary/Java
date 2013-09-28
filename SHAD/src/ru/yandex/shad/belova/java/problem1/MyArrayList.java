@@ -128,4 +128,8 @@ public class MyArrayList implements IMyList{
 		return result;
 	}
 
+	public int getCapacity() {
+	    //TODO
+	    return -1;
+	}
 }
