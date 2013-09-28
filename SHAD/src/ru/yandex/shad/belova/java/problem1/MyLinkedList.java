@@ -202,5 +202,13 @@ public class MyLinkedList implements IMyList {
 		return remove(size() - 1);
 	}
 	
+	public void addFirst(Object e){
+	    //TODO
+	}
+	
+	 public void addLast(Object e){
+	      //TODO
+	  }
+	
 	
 }
