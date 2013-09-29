@@ -44,21 +44,19 @@ public class TestMyArrayList {
     
     @Test
     public void testEnsureCapacity(){
-//        MyArrayList m3 = new MyArrayList(100);
-//        m3.ensureCapacity(125);
-//        assertEquals("Fail increase", 125, m3.getCapacity());
-//        MyArrayList m4 = new MyArrayList(100);
-//        m4.ensureCapacity(99);
-//        assertEquals("Fail not insrease", 100, m4.getCapacity());
-        fail();
+        MyArrayList m3 = new MyArrayList(100);
+        m3.ensureCapacity(125);
+        assertEquals("Fail increase", 125, m3.getCapacity());
+        MyArrayList m4 = new MyArrayList(100);
+        m4.ensureCapacity(99);
+        assertEquals("Fail not insrease", 100, m4.getCapacity());
     }
     
     @Test
     public void testEnsureCapacityException(){
-//        exception.expect(IllegalArgumentException.class);
-//        MyArrayList m3 = new MyArrayList(100);
-//        m3.ensureCapacity(-5);
-        fail();
+        exception.expect(IllegalArgumentException.class);
+        MyArrayList m3 = new MyArrayList(100);
+        m3.ensureCapacity(-5);
     }
     
     @Test

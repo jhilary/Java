@@ -19,3 +19,7 @@ target
 
 # CodeReview #
 upload.py
+
+# IDEA #
+*.iml
+*.idea

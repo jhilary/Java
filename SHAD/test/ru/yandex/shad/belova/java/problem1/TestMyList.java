@@ -164,7 +164,7 @@ public class TestMyList {
     @Test
     public void testToArray(){
         assertArrayEquals("On empty list failed", new Object[]{}, list.toArray());
-        list.add(new Object[]{1,4,-1,1000});
+        list.addAll(new Object[]{1,4,-1,1000});
         assertArrayEquals("On list failed", new Object[]{1,4,-1,1000}, list.toArray());
     }
     

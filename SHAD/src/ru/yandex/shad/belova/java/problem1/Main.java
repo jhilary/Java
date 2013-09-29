@@ -12,6 +12,11 @@ public class Main {
 		linkedList.add(2);
 		linkedList.set(0, 2);
 		linkedList.remove(1);
+
+		MyLinkedList mll = (MyLinkedList)linkedList;
+		mll.addFirst(10);
+		String s_mll = mll.toString();
+		System.out.println(s_mll);
 		
 		String s = linkedList.toString();
 		System.out.println(s);

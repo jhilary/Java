@@ -3,40 +3,37 @@ package ru.yandex.shad.belova.java.problem1;
 public class MyArrayList implements IMyList{
 
 	private static final int DEFAULT_SIZE = 10;
-	private Object[] array = new Object[DEFAULT_SIZE];
+	private Object[] array = new Object[0];
 	private int last = -1;
-	private int size = 0;
+	//private int size = 0;
 	
 	public MyArrayList(){
-	    //TODO
+
+        array = new Object[DEFAULT_SIZE];
+
 	}
 	
 	public MyArrayList(int initialCapacity){
-	    //TODO
+
+        ensureCapacity(initialCapacity);
+
 	}
 	
 	@Override
 	public void add(Object e) {
 
-		if(last == size)
-			extendArray(size * 2);
-			
+		//if(last == size)
+        if(last >= array.length)
+            ensureCapacity(array.length * 2);
+
 		add(++last, e);
 		
-	}
-
-	private void extendArray(int newSize) {
-
-		Object[] tmpArray = new Object[newSize];
-		System.arraycopy(array, 0, tmpArray, 0, size);
-		array = tmpArray;
-		size = newSize;
 	}
 
 	@Override
 	public void add(int index, Object element) {
 
-		if(index >= size || index > last)
+		if(index > last)
 			throw new ArrayIndexOutOfBoundsException();
 		
 		array[index] = element;
@@ -44,14 +41,16 @@ public class MyArrayList implements IMyList{
 
 	@Override
 	public void addAll(Object[] c) {
+
+        int count = last + 1;
+		if(c.length + (count) > array.length)
+            ensureCapacity(c.length + count);
 		
-		if(c.length > this.size)
-			extendArray(c.length);
 		
+		System.arraycopy(c, 0, array, count, c.length);
 		
-		System.arraycopy(c, c.length, this.array, this.last, c.length);
-		
-		this.last = this.size - 1;
+		last = count + c.length;
+
 	}
 
 	@Override
@@ -86,9 +85,9 @@ public class MyArrayList implements IMyList{
 	}
 
 	@Override
-	public void set(int index, Object element) {
+	public void set(int index, Object element)   {
 
-		if(index >= size)
+		if(index > last)
 			throw new ArrayIndexOutOfBoundsException();
 
 		array[index] = element;
@@ -97,8 +96,7 @@ public class MyArrayList implements IMyList{
 	@Override
 	public int indexOf(Object o) {
 
-		int size = size();
-		for(int i = 0; i < size; ++i) {
+		for(int i = 0; i <= last; ++i) {
 			if(array[i].equals(o));
 				return i;
 		}
@@ -130,14 +128,30 @@ public class MyArrayList implements IMyList{
 	@Override
 	public Object[] toArray() {
 
-		Object[] result = new Object[this.array.length];
-		System.arraycopy(this.array, 0, result, 0, result.length);
+        //int size = (last != -1 ? last : 0);
+		Object[] result = new Object[last + 1];
+		System.arraycopy(array, 0, result, 0, last + 1);
 
 		return result;
 	}
 
-	public int getCapacity() {
-	    //TODO
-	    return -1;
+    public void ensureCapacity(int minCapacity) {
+
+        if(minCapacity < 0)
+            throw new IllegalArgumentException();
+
+        if(array.length >= minCapacity)
+            return;
+
+        Object[] tmpArray = new Object[minCapacity];
+        System.arraycopy(array, 0, tmpArray, 0, array.length);
+        array = tmpArray;
+
+    }
+
+    public int getCapacity() {
+
+	    return array.length;
+
 	}
 }

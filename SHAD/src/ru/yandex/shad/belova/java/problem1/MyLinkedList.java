@@ -26,6 +26,15 @@ public class MyLinkedList implements IMyList {
 		Node getNext() {
 			return next;
 		}
+
+		void setPrev(Node prev) {
+			// TODO
+		}
+		
+		void setNext(Node next) {
+			// TODO
+		}
+	
 	}
 	
 	private Node head;
@@ -162,9 +171,12 @@ public class MyLinkedList implements IMyList {
 		StringBuilder str = new StringBuilder();
 
 		Node n = head;
-		
-		while(n != null) {
+		if(n != null) {
 			str.append(n.value);
+			n = n.next;
+		}
+		while(n != null) {
+			str.append(", " + n.value);
 			n = n.next;
 		}
 
@@ -203,12 +215,34 @@ public class MyLinkedList implements IMyList {
 	}
 	
 	public void addFirst(Object e){
-	    //TODO
+
+        Node tmp = new Node(e, null);
+
+        if(head != null)
+            tmp.next = head;
+        else
+            tail = head;
+
+        head = tmp;
+
+        ++size;
+
+        //////////
+
+//        if(head != null) {
+//    		Node tmp = head;
+//            head = new Node(e, null);
+//            head.next = tmp;
+//            tmp.prev = head;
+//        }
+//        else
+//            head = new Node(e, null);
 	}
 	
 	 public void addLast(Object e){
-	      //TODO
-	  }
+
+		 add(e, tail);
+	 }
 	
 	
 }
