@@ -51,11 +51,13 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 
         @Override
         public int nextIndex() {
-            throw new UnsupportedOperationException();        }
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public int previousIndex() {
-            throw new UnsupportedOperationException();        }
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public void remove() {
@@ -86,8 +88,8 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 
     class Node {
 		Object value;
-		Node prev;
-		Node next;
+		private Node prev;
+		private Node next;
 		
 		public Node(Object value, Node prev) {
 
@@ -132,7 +134,6 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	private Node add(Object element, Node prev) {
 
 		Node n = new Node(element, prev);
-		++size;
 		
 		return n;
 	}
@@ -140,28 +141,32 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	public void add(Object e) { // – добавляет элемент в конец коллекции
 
 		tail = add(e, tail);
-
+        size++;
 		if(head == null)
 			head = tail;
-		
 	}
 
 	public void add(int index, Object element) { //– добавляет элемент в указанное место коллекции
 
-        if(index < 0 || index > size())
+        if(index < 0 || index > size)
             throw new IndexOutOfBoundsException();
         if(index == 0){
-            addFirst(element);
+            Node tmp = head;
+            head = new Node(element, null);
+            head.next = tmp;
+            if(tail == null)  {
+                tail = head;
+            }
         } else {
             add(element, getNodeAtIndex(index-1));
         }
+        size++;
 	}
 
 	public void addAll(Object[] c) { // - добавляет массив элементов в конец коллекции
-		
-        for(Object obj : c)
-			add(obj);
-
+        for(Object value: c){
+            add(value);
+        }
 	}
 
 	public void addAll(int index, Object[] c) { // - добавляет массив элементов в указанное место коллекции
@@ -196,7 +201,7 @@ public class MyLinkedList implements MyList, Iterable<Object>{
         if(next == null)
             tail = prev;
 
-        --size;
+        size--;
 
 		return toRemove.value;
 	}
@@ -231,22 +236,17 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	
 	public boolean isEmpty() { // - возвращает true если в коллекции нет элементов
 		return (head == null);
-		
 	}
 	
 	public Object[] toArray() { // - преобразует коллекцию в массив объектов
 		
-		Object[] result = new Object[size()];
-
-		int i = 0;
-		Node n = head;
-		while(n != null) {
-			result[i++] = n.value;
-			n = n.next;
-		}
+		Object[] result = new Object[size];
+        int i = 0;
+        for(Object o: this){
+            result[i++] = o;
+        }
 		
 		return result;
-		
 	}
 	
 	public String toString() { // - возвращает строку, в которой через запятую выводятся значения элементов в коллекции
@@ -262,7 +262,7 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 
 	public Object getFirst() {
 		
-		if(this.head == null)
+		if(isEmpty())
 			throw new NoSuchElementException();
 
 		return this.head.value;
@@ -270,14 +270,14 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	
 	public Object getLast() {
 
-		if(this.tail == null)
+		if(isEmpty())
 			throw new NoSuchElementException();
 
 		return this.tail.value;
 	}
 	
 	public Object removeFirst() {
-        if(size() == 0){
+        if(isEmpty()){
             throw new NoSuchElementException();
         }
 		return remove(0);
@@ -292,18 +292,7 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	}
 	
 	public void addFirst(Object e){
-
-        Node tmp = new Node(e, null);
-
-        if(head != null)
-            tmp.next = head;
-        else
-            tail = head;
-
-        head = tmp;
-
-        ++size;
-
+        add(0,e);
 	}
 	
 	 public void addLast(Object e){
