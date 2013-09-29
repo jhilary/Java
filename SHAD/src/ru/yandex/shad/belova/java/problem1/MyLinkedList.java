@@ -180,9 +180,11 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	}
 
 	public Object remove(int index) { // - удаляет элемент по индексу
-		
-		Node toRemove = getNodeAtIndex(index);
 
+        if(index < 0 || index > size()-1){
+            throw new IndexOutOfBoundsException();
+        }
+		Node toRemove = getNodeAtIndex(index);
         Node prev = toRemove.prev;
         Node next = toRemove.next;
         if(prev != null)
@@ -200,6 +202,9 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	}
 
 	public void set(int index, Object element) { // – изменяет значение элемента
+        if(index < 0 || index > size()-1){
+            throw new IndexOutOfBoundsException();
+        }
 		getNodeAtIndex(index).value = element;
 	}
 

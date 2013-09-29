@@ -70,12 +70,12 @@ public class TestMyLinkedList {
     
     @Test
     public void testRemoveFirst(){
-        list.add(new Object[]{1});
-        Object first = list.removeFirst();
+        list.addAll(new Object[]{1});
+        int first = (Integer)list.removeFirst();
         assertEquals("Fail element returned on list with one element", 1, first);
         assertArrayEquals("Fail removing on list with one element", new Object[]{}, list.toArray());
         list.addAll(new Object[]{5,6,7,8});
-        first = list.removeFirst();
+        first = (Integer)list.removeFirst();
         assertEquals("Fail element returned on list", 5, first);
         assertArrayEquals("Fail removing on list", new Object[]{6,7,8}, list.toArray());
     }

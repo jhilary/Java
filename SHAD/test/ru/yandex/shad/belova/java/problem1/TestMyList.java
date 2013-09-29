@@ -176,13 +176,23 @@ public class TestMyList {
     
     @Test
     public void testRemove(){
+        list.addAll(new Object[]{1});
+        int element = (Integer)list.remove(0);
+        assertArrayEquals("Remove first failed from one element list", new Object[]{}, list.toArray());
+        assertEquals("Remove first failed from one element list", 1, element);
+
         list.addAll(new Object[]{1,100,11,140,-2});
-        list.remove(0);
+        element = (Integer)list.remove(0);
         assertArrayEquals("Remove first failed", new Object[]{100,11,140,-2}, list.toArray());
-        list.remove(3);
+        assertEquals("Remove first failed", 1, element);
+
+        element = (Integer)list.remove(3);
         assertArrayEquals("Remove last failed", new Object[]{100,11,140}, list.toArray());
-        list.remove(1);
+        assertEquals("Remove last failed", -2, element);
+
+        element = (Integer)list.remove(1);
         assertArrayEquals("Remove middle failed", new Object[]{100,140}, list.toArray());
+        assertEquals("Remove last failed", 11, element);
     }
     
     @Test
