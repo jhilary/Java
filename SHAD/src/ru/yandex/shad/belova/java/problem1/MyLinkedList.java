@@ -134,8 +134,8 @@ public class MyLinkedList implements IMyList {
 	public int indexOf(Object o) { // - поиск индекса по значению элемента (выводит индекс первого найденного, или -1 в случае его отсутствия)
 		int size = size();
 		for(int i = 0; i < size; ++i) {
-			Object obj = getNodeAtIndex(i);
-			if(obj.equals(o))
+			Node node = getNodeAtIndex(i);
+			if(node.value.equals(o))
 				return i;
 		}
 		
