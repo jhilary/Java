@@ -79,7 +79,7 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 
     public ListIterator<Object> listIterator(int index) {
         if(index < 0 || index > size()-1){
-            throw new ArrayIndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException();
         }
         return new MyLinkedListIterator(index);
     }
@@ -96,6 +96,7 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 				Node next = prev.next;
 				prev.next = this;
 				this.prev = prev;
+                this.next = next;
 				if(next != null)
 					next.prev = this;
 			}
@@ -117,7 +118,7 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	private Node getNodeAtIndex(int index) {
 
 		if(index < 0 || index > size()-1)
-			throw new ArrayIndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException();
 
 		Node currentNode = head;
 		for(int i = 0; i < index; i++) {
@@ -147,39 +148,31 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 
 	public void add(int index, Object element) { //– добавляет элемент в указанное место коллекции
 
-		if(head == null && index != 0)
-			throw new ArrayIndexOutOfBoundsException();
-
-		add(element, getNodeAtIndex(index));
-
+        if(index < 0 || index > size())
+            throw new IndexOutOfBoundsException();
+        if(index == 0){
+            addFirst(element);
+        } else {
+            add(element, getNodeAtIndex(index-1));
+        }
 	}
 
 	public void addAll(Object[] c) { // - добавляет массив элементов в конец коллекции
 		
-		if(c == null || c.length == 0)
-			return;//throw new ArrayIndexOutOfBoundsException();
-
-		for(Object obj : c)
+        for(Object obj : c)
 			add(obj);
 
 	}
 
 	public void addAll(int index, Object[] c) { // - добавляет массив элементов в указанное место коллекции
 
-        if(c.length < 1)
-            return; // TODO - check the right way to handle it
-
-        Node currentNode = getNodeAtIndex(index);
-        Node firstAdded = add(c[0], currentNode.prev);
-        Node prev = firstAdded;
-        for(int i = 1; i < c.length; ++i)
-            prev = add(c[i], prev);
-
-        if(currentNode == head && firstAdded != null) {
-            prev.next = head;
-            head = firstAdded;
+        if(index < 0 || index > size()){
+            throw new IndexOutOfBoundsException();
         }
 
+        for(int i = index; i < index+c.length; i++){
+            add(i, c[i-index]);
+        }
 	}
 
 	public Object get(int index) { // – возвращает элемент по индексу
@@ -273,7 +266,7 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	public Object getFirst() {
 		
 		if(this.head == null)
-			throw new ArrayIndexOutOfBoundsException(); //TODO - replace with the proper excepiton
+			throw new NoSuchElementException();
 
 		return this.head.value;
 	}
@@ -281,20 +274,22 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	public Object getLast() {
 
 		if(this.tail == null)
-			throw new ArrayIndexOutOfBoundsException(); //TODO - replace with the proper excepiton
+			throw new NoSuchElementException();
 
 		return this.tail.value;
 	}
 	
 	public Object removeFirst() {
-
+        if(size() == 0){
+            throw new NoSuchElementException();
+        }
 		return remove(0);
 	}
 	
 	public Object removeLast() {
 
 		if(isEmpty())
-			throw new ArrayIndexOutOfBoundsException(); //TODO - replace with the proper excepiton
+			throw new NoSuchElementException();
 
 		return remove(size() - 1);
 	}

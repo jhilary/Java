@@ -34,8 +34,8 @@ public class MyArrayList implements IMyList{
 	@Override
 	public void add(int index, Object element) {
 
-		if(index > last)
-			throw new ArrayIndexOutOfBoundsException();
+		if(index < 0 || index > size())
+			throw new IndexOutOfBoundsException();
 		
         Object[] tmp = new Object[array.length + 1];
         tmp[index] = element;
@@ -69,6 +69,9 @@ public class MyArrayList implements IMyList{
 	@Override
 	public void addAll(int index, Object[] c) {
 
+        if(index < 0 || index > size())
+            throw new IndexOutOfBoundsException();
+
         Object[] tmp = new Object[array.length + c.length];
         if(index == 0) {
             System.arraycopy(c, 0, tmp, 0, c.length);
@@ -89,8 +92,8 @@ public class MyArrayList implements IMyList{
 	@Override
 	public Object get(int index) {
 
-		if(index > last)
-			throw new ArrayIndexOutOfBoundsException();
+        if(index < 0 || index >= size())
+            throw new IndexOutOfBoundsException();
 
 		return array[index];
 	}
@@ -98,10 +101,11 @@ public class MyArrayList implements IMyList{
 	@Override
 	public Object remove(int index) {
 
-		if(index > last)
-			throw new IndexOutOfBoundsException();//ArrayIndexOutOfBoundsException();
+        if(index < 0 || index >= size())
+            throw new IndexOutOfBoundsException();
 
-		Object obj = array[index];
+
+        Object obj = array[index];
 		
 		Object[] tmp = new Object[array.length - 1];
         System.arraycopy(array, 0, tmp, 0, index);
@@ -118,10 +122,11 @@ public class MyArrayList implements IMyList{
 	@Override
 	public void set(int index, Object element)   {
 
-		if(index > last)
-			throw new ArrayIndexOutOfBoundsException();
+        if(index < 0 || index >= size())
+            throw new IndexOutOfBoundsException();
 
-		array[index] = element;
+
+        array[index] = element;
 	}
 
 	@Override
