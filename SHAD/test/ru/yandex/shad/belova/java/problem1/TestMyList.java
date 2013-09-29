@@ -50,11 +50,11 @@ public class TestMyList {
         list.add(3);
         assertArrayEquals("Fail in adding element 3 with add", new Object[]{1,2,3}, list.toArray());
         list.add(0, 5);
-        assertArrayEquals("Fail in adding first element with add by index", new Object[]{5,2,3}, list.toArray());
+        assertArrayEquals("Fail in adding first element with add by index", new Object[]{5,1,2,3}, list.toArray());
         list.add(3, 10);
-        assertArrayEquals("Fail in adding last element with add by index", new Object[]{5,2,3,10}, list.toArray());
+        assertArrayEquals("Fail in adding last element with add by index", new Object[]{5,1,2,10,3}, list.toArray());
         list.add(2, 4);
-        assertArrayEquals("Fail in adding middle element with add by index", new Object[]{5,2,4,3,10}, list.toArray());
+        assertArrayEquals("Fail in adding middle element with add by index", new Object[]{5,1,4,2,10,3}, list.toArray());
     }
     
     @Test

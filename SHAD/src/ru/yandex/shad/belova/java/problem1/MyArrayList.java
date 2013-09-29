@@ -26,7 +26,8 @@ public class MyArrayList implements IMyList{
         if(last >= array.length)
             ensureCapacity(array.length * 2);
 
-		add(++last, e);
+        array[++last] = e;
+//        add(++last, e);
 		
 	}
 
@@ -36,7 +37,19 @@ public class MyArrayList implements IMyList{
 		if(index > last)
 			throw new ArrayIndexOutOfBoundsException();
 		
-		array[index] = element;
+        Object[] tmp = new Object[array.length + 1];
+        tmp[index] = element;
+        if(index == 0)
+            System.arraycopy(array, 0, tmp, 1, array.length);
+        else {
+            System.arraycopy(array, 0, tmp, 0, index);
+            System.arraycopy(array, index, tmp, index + 1, array.length - index);
+        }
+
+        array = tmp;
+
+        ++last;
+
 	}
 
 	@Override
@@ -112,7 +125,7 @@ public class MyArrayList implements IMyList{
 	@Override
 	public int size() {
 
-		return last;
+		return last + 1;
 	}
 
 	@Override
