@@ -88,7 +88,7 @@ public class TestMyLinkedList {
     
     @Test
     public void testRemoveLast(){
-        list.add(new Object[]{1});
+        list.addAll(new Object[]{1});
         Object last = list.removeLast();
         assertEquals("Fail element returned on list with one element", 1, last);
         assertArrayEquals("Fail removing on list with one element", new Object[]{}, list.toArray());
