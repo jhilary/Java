@@ -97,10 +97,20 @@ public class MyLinkedList implements IMyList {
 
 	public void addAll(int index, Object[] c) { // - добавляет массив элементов в указанное место коллекции
 
-		Node currentNode = getNodeAtIndex(index);
-		for(Object obj : c)
-			currentNode = add(obj, currentNode);
-	
+        if(c.length < 1)
+            return; // TODO - check the right way to handle it
+
+        Node currentNode = getNodeAtIndex(index);
+        Node firstAdded = add(c[0], currentNode.prev);
+        Node prev = firstAdded;
+        for(int i = 1; i < c.length; ++i)
+            prev = add(c[i], prev);
+
+        if(currentNode == head && firstAdded != null) {
+            prev.next = head;
+            head = firstAdded;
+        }
+
 	}
 
 	public Object get(int index) { // – возвращает элемент по индексу
