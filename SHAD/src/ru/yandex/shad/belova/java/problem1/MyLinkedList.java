@@ -129,7 +129,7 @@ public class MyLinkedList implements IMyList {
 		int size = size();
 		for(int i = 0; i < size; ++i) {
 			Object obj = getNodeAtIndex(i);
-			if(obj.equals(o));
+			if(obj.equals(o))
 				return i;
 		}
 		

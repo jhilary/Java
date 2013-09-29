@@ -64,11 +64,11 @@ public class TestMyList {
         list.addAll(0, new Object[]{-1,-2,-3});
         assertArrayEquals("Fail in adding first elements with addAll by index", new Object[]{-1,-2,-3,4,5,6}, list.toArray());
         list.addAll(6, new Object[]{100,200,300});
-        assertArrayEquals("Fail in adding first elements with addAll by index", new Object[]{-1,-2,-3,4,5,6,10,100,200,300}, list.toArray());
+        assertArrayEquals("Fail in adding first elements with addAll by index", new Object[]{-1,-2,-3,4,5,6,100,200,300}, list.toArray());
         list.addAll(1, new Object[]{});
-        assertArrayEquals("Fail in adding empty array", new Object[]{-1,-2,-3,4,5,6,10,100,200,300}, list.toArray());
+        assertArrayEquals("Fail in adding empty array", new Object[]{-1,-2,-3,4,5,6,100,200,300}, list.toArray());
         list.addAll(1, new Object[]{3,4});
-        assertArrayEquals("Fail in adding empty array", new Object[]{-1,3,4,-2,-3,4,5,6,10,100,200,300}, list.toArray());
+        assertArrayEquals("Fail in adding empty array", new Object[]{-1,3,4,-2,-3,4,5,6,100,200,300}, list.toArray());
     
     }
     

@@ -72,7 +72,7 @@ public class MyArrayList implements IMyList{
         Object[] tmp = new Object[array.length + c.length];
         if(index == 0) {
             System.arraycopy(c, 0, tmp, 0, c.length);
-            System.arraycopy(array, 0, tmp, c.length - 1, array.length);
+            System.arraycopy(array, 0, tmp, c.length, array.length);
         }
         else{
             System.arraycopy(array, 0, tmp, 0, index);
@@ -128,7 +128,7 @@ public class MyArrayList implements IMyList{
 	public int indexOf(Object o) {
 
 		for(int i = 0; i <= last; ++i) {
-			if(array[i].equals(o));
+			if(array[i].equals(o))
 				return i;
 		}
 		
