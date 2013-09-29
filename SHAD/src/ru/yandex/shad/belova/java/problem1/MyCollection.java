@@ -2,9 +2,64 @@ package ru.yandex.shad.belova.java.problem1;
 
 public class MyCollection {
     //TODO: Add private constructor
-    
+
+    private static void swap(MyArrayList a, int i, int j){
+        Integer temp = (Integer)a.get(i);
+        a.set(i, (Integer)a.get(j));
+        a.set(j, temp);
+    }
+
+    private interface IPivotStrategy {
+        int getPivotIndex(MyArrayList a, int start, int end);
+    }
+
+    private static IPivotStrategy firstPivot = new IPivotStrategy() {
+        public int getPivotIndex(MyArrayList a, int start, int end) {
+            return start;
+        }
+    };
+
+    private static IPivotStrategy lastPivot = new IPivotStrategy() {
+        public int getPivotIndex(MyArrayList a, int start, int end) {
+            return end;
+        }
+    };
+
+    private static IPivotStrategy medianPivot = new IPivotStrategy() {
+        public int getPivotIndex(MyArrayList a, int start, int end) {
+            int first = (Integer)a.get(start);
+            int second = (Integer)a.get((start+end)/2);
+            int third = (Integer)a.get(end);
+            int firstInd = start;
+            int secondInd = (start+end)/2;
+            int thirdInd = end;
+
+            if(first <= second){
+                if(third <= first){
+                    return firstInd;
+                }
+                else {
+                    if (third >= second){
+                        return secondInd;
+                    } else {
+                        return thirdInd;
+                    }
+                }
+            } else if(third >= first){
+                return firstInd;
+            }
+            else {
+                if (third <= second){
+                    return secondInd;
+                } else {
+                    return thirdInd;
+                }
+            }
+        }
+    };
+
     public static void sort(MyArrayList list){
-        //TODO
+        quickSortClassic(list, medianPivot);
     }
     
     public static void copy(MyLinkedList dest, MyLinkedList src){
@@ -19,4 +74,31 @@ public class MyCollection {
         //TODO
         return 0;
     }
+
+    public static void quickSortClassic (MyArrayList a, IPivotStrategy pivotStrategy) {
+        quickSortClassic(a, 0, a.size() - 1, pivotStrategy);
+    }
+
+    private static void quickSortClassic (MyArrayList a, int start, int end, IPivotStrategy pivotStrategy) {
+        if(end-start < 1){
+            return;
+        }
+        int pivotIndex = pivotStrategy.getPivotIndex(a, start, end);
+        int pivotValue = (Integer)a.get(pivotIndex);
+        swap(a,start,pivotIndex);
+        int i = start + 1;
+        int j = start + 1;
+        while (j <= end){
+            if ((Integer)a.get(j) < pivotValue) {
+                swap(a,j,i);
+                i++;
+            }
+            j++;
+        }
+        swap(a, start, i-1);
+        quickSortClassic(a, start, i-2, pivotStrategy);
+        quickSortClassic(a, i, end, pivotStrategy);
+    }
+
+
 }
