@@ -15,18 +15,6 @@ public class MyCollection {
         int getPivotIndex(MyArrayList a, int start, int end);
     }
 
-    private static IPivotStrategy firstPivot = new IPivotStrategy() {
-        public int getPivotIndex(MyArrayList a, int start, int end) {
-            return start;
-        }
-    };
-
-    private static IPivotStrategy lastPivot = new IPivotStrategy() {
-        public int getPivotIndex(MyArrayList a, int start, int end) {
-            return end;
-        }
-    };
-
     private static IPivotStrategy medianPivot = new IPivotStrategy() {
         public int getPivotIndex(MyArrayList a, int start, int end) {
             int first = (Integer)a.get(start);
