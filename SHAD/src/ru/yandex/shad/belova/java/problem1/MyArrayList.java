@@ -49,7 +49,7 @@ public class MyArrayList implements IMyList{
 		
 		System.arraycopy(c, 0, array, count, c.length);
 		
-		last = count + c.length;
+		last = count + c.length - 1;
 
 	}
 
