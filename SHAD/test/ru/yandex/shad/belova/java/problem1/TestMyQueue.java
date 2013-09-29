@@ -54,7 +54,7 @@ public class TestMyQueue {
         queue.offer(10);
         queue.offer(145);
         queue.offer(-1);
-        assertEquals("Wrong element polled", 3, queue.peek());
+        assertEquals("Wrong element polled", 3, queue.poll());
         assertArrayEquals("Peek have changed array in wrong way", new Object[]{10,145,-1}, queue.toArray());
     }
     

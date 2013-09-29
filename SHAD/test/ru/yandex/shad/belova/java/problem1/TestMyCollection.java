@@ -22,7 +22,6 @@ public class TestMyCollection {
         a.addAll(new Object[]{1,2,3,4});
         MyLinkedList b = new MyLinkedList();
         MyCollection.copy(b, a);
-        System.out.println(a.toString() + " " +b.toString());
         assertArrayEquals("Copied arrays are not equal", a.toArray(), b.toArray());
 
         b = new MyLinkedList();
@@ -45,11 +44,9 @@ public class TestMyCollection {
     public void testReverse(){
         MyLinkedList a = new MyLinkedList();
         a.addAll(new Object[]{1,2,3,4,10,-5,3});
-        System.out.println(a.toString());
         MyLinkedList b = new MyLinkedList();
         b.addAll(new Object[]{3,-5,10,4,3,2,1});
         MyCollection.reverse(a);
-        System.out.println(a.toString());
         assertArrayEquals("Failed on reverse", b.toArray(), a.toArray());
         
         a = new MyLinkedList();
