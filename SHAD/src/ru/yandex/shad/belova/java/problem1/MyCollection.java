@@ -3,9 +3,9 @@ package ru.yandex.shad.belova.java.problem1;
 public class MyCollection {
     //TODO: Add private constructor
 
-    private static void swap(MyArrayList a, int i, int j){
-        Integer temp = (Integer)a.get(i);
-        a.set(i, (Integer)a.get(j));
+    private static void swap(IMyList a, int i, int j){
+        Object temp = a.get(i);
+        a.set(i, a.get(j));
         a.set(j, temp);
     }
 
@@ -67,7 +67,10 @@ public class MyCollection {
     }
     
     public static void reverse(MyLinkedList list){
-        //TODO
+        int size = list.size();
+        for(int i = 0; i < size/2; i++){
+            swap(list, i, size - 1 - i);
+        }
     }
     
     public static int binarySearch(MyArrayList list, Object key){
