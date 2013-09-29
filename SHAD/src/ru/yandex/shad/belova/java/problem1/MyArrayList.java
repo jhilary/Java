@@ -59,15 +59,10 @@ public class MyArrayList implements MyList {
             throw new IndexOutOfBoundsException();
 
         Object[] tmp = new Object[array.length + c.length];
-        if(index == 0) {
-            System.arraycopy(c, 0, tmp, 0, c.length);
-            System.arraycopy(array, 0, tmp, c.length, array.length);
-        }
-        else{
-            System.arraycopy(array, 0, tmp, 0, index);
-            System.arraycopy(c, 0, tmp, index, c.length);
-            System.arraycopy(array, index, tmp, c.length + index, array.length - index);
-        }
+
+        System.arraycopy(array, 0, tmp, 0, index);
+        System.arraycopy(c, 0, tmp, index, c.length);
+        System.arraycopy(array, index, tmp, c.length + index, array.length - index);
 
         size += c.length;
 
