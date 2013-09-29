@@ -4,24 +4,21 @@ public class MyQueue {
     private MyLinkedList list;
     
     public MyQueue(){
-        //TODO
+        list = new MyLinkedList();
     }
     public void offer(Object e){
-        //TODO
+        list.addLast(e);
     }
     
     public Object peek(){
-        //TODO
-        return new Object();
+        return list.getFirst();
     }
     
     public Object poll(){
-        //TODO
-        return new Object();
+        return list.removeFirst();
     }
     
     public Object[] toArray(){
-        //TODO
-        return new Object[]{};
+        return list.toArray();
     }
 }

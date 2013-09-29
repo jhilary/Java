@@ -27,22 +27,20 @@ public class TestMyStack {
     
     @Test
     public void testPush(){
-//        stack.push(2);
-//        assertArrayEquals("Fail offering in empty stack", new Object[]{2}, stack.toArray());
-//        stack.push(4);
-//        assertArrayEquals("Fail offering in queue", new Object[]{2,4}, stack.toArray());
-        fail();
+        stack.push(2);
+        assertArrayEquals("Fail offering in empty stack", new Object[]{2}, stack.toArray());
+        stack.push(4);
+        assertArrayEquals("Fail offering in queue", new Object[]{2,4}, stack.toArray());
     }
     
     @Test
     public void testPeek(){
-//        stack.push(3);
-//        stack.push(10);
-//        stack.push(145);
-//        stack.push(-1);
-//        assertEquals("Wrong element peeked", -1, stack.peek());
-//        assertArrayEquals("Peek have changed array", new Object[]{3,10,145,-1}, stack.toArray());
-        fail();
+        stack.push(3);
+        stack.push(10);
+        stack.push(145);
+        stack.push(-1);
+        assertEquals("Wrong element peeked", -1, stack.peek());
+        assertArrayEquals("Peek have changed array", new Object[]{3,10,145,-1}, stack.toArray());
     }
     
     @Test
@@ -53,13 +51,12 @@ public class TestMyStack {
     
     @Test
     public void testPop(){
-//        stack.push(3);
-//        stack.push(10);
-//        stack.push(145);
-//        stack.push(-1);
-//        assertEquals("Wrong element peeked", -1, stack.pop());
-//        assertArrayEquals("Peek have changed array", new Object[]{3,10,145}, stack.toArray());
-        fail();
+        stack.push(3);
+        stack.push(10);
+        stack.push(145);
+        stack.push(-1);
+        assertEquals("Wrong element peeked", -1, stack.pop());
+        assertArrayEquals("Peek have changed array", new Object[]{3,10,145}, stack.toArray());
     }
     
     @Test

@@ -4,19 +4,21 @@ public class MyStack {
     private MyLinkedList list;
     
     public MyStack(){
-        //TODO
+        list = new MyLinkedList();
     }
     public void push(Object e){
-        //TODO
+        list.addLast(e);
     }
     
     public Object pop(){
-        //TODO
-        return new Object();
+        return list.removeLast();
     }
     
     public Object peek(){
-        //TODO
-        return new Object();
+        return list.getLast();
+    }
+
+    public Object[] toArray(){
+        return list.toArray();
     }
 }
