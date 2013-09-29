@@ -77,7 +77,12 @@ public class MyArrayList implements IMyList{
 
 		Object obj = array[index];
 		
-		System.arraycopy(this.array, index + 1, this.array, index, this.array.length - index);
+		Object[] tmp = new Object[array.length - 1];
+        System.arraycopy(array, 0, tmp, 0, index);
+        System.arraycopy(array, index + 1, tmp, index, array.length - (index + 1));
+
+        array = tmp;
+
 		--last;
 
 		return obj;
