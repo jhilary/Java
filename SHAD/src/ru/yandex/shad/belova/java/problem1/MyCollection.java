@@ -1,5 +1,8 @@
 package ru.yandex.shad.belova.java.problem1;
 
+import java.util.Iterator;
+import java.util.ListIterator;
+
 public class MyCollection {
     //TODO: Add private constructor
 
@@ -63,13 +66,22 @@ public class MyCollection {
     }
     
     public static void copy(MyLinkedList dest, MyLinkedList src){
-        //TODO
+        for(Object o: src){
+            dest.add(o);
+        }
     }
     
     public static void reverse(MyLinkedList list){
         int size = list.size();
+        if(size == 0 || size == 1){
+            return;
+        }
+        ListIterator<Object> iterForward = list.listIterator(0);
+        ListIterator<Object> iterBackward = list.listIterator(size - 1);
         for(int i = 0; i < size/2; i++){
-            swap(list, i, size - 1 - i);
+            Object temp = iterForward.next();
+            iterForward.set(iterBackward.previous());
+            iterBackward.set(temp);
         }
     }
     

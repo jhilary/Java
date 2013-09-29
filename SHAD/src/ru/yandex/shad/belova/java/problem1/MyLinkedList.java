@@ -1,8 +1,90 @@
 package ru.yandex.shad.belova.java.problem1;
 
-public class MyLinkedList implements IMyList {
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
-	class Node {
+public class MyLinkedList implements IMyList, Iterable<Object>{
+
+
+    public class MyLinkedListIterator implements ListIterator<Object> {
+
+        private Node returned;
+        private Node current;
+
+        public MyLinkedListIterator(){
+            current = head;
+        }
+
+        public MyLinkedListIterator(int index){
+            current = getNodeAtIndex(index);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public Object next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            returned = current;
+            current = current.getNext();
+            return returned.value;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return current != null;
+        }
+
+        @Override
+        public Object previous() {
+            if (!hasPrevious()) {
+                throw new NoSuchElementException();
+            }
+            returned = current;
+            current = current.getPrev();
+            return returned.value;
+        }
+
+        @Override
+        public int nextIndex() {
+            throw new UnsupportedOperationException();        }
+
+        @Override
+        public int previousIndex() {
+            throw new UnsupportedOperationException();        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void set(Object o) {
+            returned.value = o;
+        }
+
+        @Override
+        public void add(Object o) {
+            throw new UnsupportedOperationException();
+        }
+    }
+    @Override
+    public ListIterator<Object> iterator() {
+        return new MyLinkedListIterator();
+    }
+
+    public ListIterator<Object> listIterator(int index) {
+        if(index < 0 || index > size()-1){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        return new MyLinkedListIterator(index);
+    }
+
+    class Node {
 		Object value;
 		Node prev;
 		Node next;
@@ -25,16 +107,7 @@ public class MyLinkedList implements IMyList {
 		
 		Node getNext() {
 			return next;
-		}
-
-		void setPrev(Node prev) {
-			// TODO
-		}
-		
-		void setNext(Node next) {
-			// TODO
-		}
-	
+        }
 	}
 	
 	private Node head;
@@ -43,17 +116,13 @@ public class MyLinkedList implements IMyList {
 	
 	private Node getNodeAtIndex(int index) {
 
-		if(index < 0)
+		if(index < 0 || index > size()-1)
 			throw new ArrayIndexOutOfBoundsException();
 
 		Node currentNode = head;
-		int i = 0;
-		for(; i < index && currentNode != null; ++i) {
+		for(int i = 0; i < index; i++) {
 			currentNode = currentNode.next;
 		}
-
-		if(i < index || currentNode == null)
-			throw new ArrayIndexOutOfBoundsException();
 		
 		return currentNode;
 

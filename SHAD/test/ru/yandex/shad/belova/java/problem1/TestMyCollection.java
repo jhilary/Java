@@ -21,42 +21,48 @@ public class TestMyCollection {
         MyLinkedList a = new MyLinkedList();
         a.addAll(new Object[]{1,2,3,4});
         MyLinkedList b = new MyLinkedList();
-        MyCollection.copy(a, b);
+        MyCollection.copy(b, a);
+        System.out.println(a.toString() + " " +b.toString());
         assertArrayEquals("Copied arrays are not equal", a.toArray(), b.toArray());
-        
+
+        b = new MyLinkedList();
         a.add(3);
-        MyCollection.copy(a, b);
+        MyCollection.copy(b, a);
         assertArrayEquals("There are have being copied only links", a.toArray(), b.toArray());
-        
+
+        b = new MyLinkedList();
         b.add(2);
-        MyCollection.copy(a, b);
+        MyCollection.copy(b, a);
+        a.addFirst(2);
         assertArrayEquals("Copying failed if there are elements in second collection", a.toArray(), b.toArray());
         
         a = new MyLinkedList();
-        MyCollection.copy(a, b);
-        assertArrayEquals("Copying failed if there are no elements in first collection", a.toArray(), b.toArray());   
+        MyCollection.copy(b, a);
+        assertArrayEquals("Copying failed if there are no elements in first collection", b.toArray(), b.toArray());
     }
     
     @Test
     public void testReverse(){
         MyLinkedList a = new MyLinkedList();
         a.addAll(new Object[]{1,2,3,4,10,-5,3});
+        System.out.println(a.toString());
         MyLinkedList b = new MyLinkedList();
         b.addAll(new Object[]{3,-5,10,4,3,2,1});
         MyCollection.reverse(a);
-        assertArrayEquals("Failed on reverse", a.toArray(), b.toArray());
+        System.out.println(a.toString());
+        assertArrayEquals("Failed on reverse", b.toArray(), a.toArray());
         
         a = new MyLinkedList();
         b = new MyLinkedList();
         MyCollection.reverse(a);
-        assertArrayEquals("Failed if list is empty", a.toArray(), b.toArray());
+        assertArrayEquals("Failed if list is empty", b.toArray(), a.toArray());
         
         a = new MyLinkedList();
         a.add(2);
         b = new MyLinkedList();
         b.add(2);
         MyCollection.reverse(a);
-        assertArrayEquals("Failed if list has one element", a.toArray(), b.toArray());
+        assertArrayEquals("Failed if list has one element", b.toArray(), a.toArray());
         }
     
     @Test
