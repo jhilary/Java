@@ -52,7 +52,7 @@ public class MyLinkedList implements IMyList {
 			currentNode = currentNode.next;
 		}
 
-		if(i < index)
+		if(i < index || currentNode == null)
 			throw new ArrayIndexOutOfBoundsException();
 		
 		return currentNode;
