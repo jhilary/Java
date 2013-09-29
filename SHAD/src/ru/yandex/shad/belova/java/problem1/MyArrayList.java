@@ -4,37 +4,29 @@ public class MyArrayList implements MyList {
 
 	private static final int DEFAULT_SIZE = 10;
 	private Object[] array = new Object[0];
-	private int last = -1;
-	//private int size = 0;
-	
+	private int size = 0;
+
 	public MyArrayList(){
-
         array = new Object[DEFAULT_SIZE];
-
 	}
 	
 	public MyArrayList(int initialCapacity){
-
         ensureCapacity(initialCapacity);
-
 	}
 	
 	@Override
 	public void add(Object e) {
 
-		//if(last == size)
-        if(last >= array.length)
+        if(size == array.length)
             ensureCapacity(array.length * 2);
 
-        array[++last] = e;
-//        add(++last, e);
-		
+        array[size++] = e;
 	}
 
 	@Override
 	public void add(int index, Object element) {
 
-		if(index < 0 || index > size())
+		if(index < 0 || index > size)
 			throw new IndexOutOfBoundsException();
 		
         Object[] tmp = new Object[array.length + 1];
@@ -47,29 +39,28 @@ public class MyArrayList implements MyList {
         }
 
         array = tmp;
-
-        ++last;
+        size++;
 
 	}
 
 	@Override
 	public void addAll(Object[] c) {
 
-        int count = last + 1;
+        int count = size;
 		if(c.length + (count) > array.length)
             ensureCapacity(c.length + count);
 		
 		
 		System.arraycopy(c, 0, array, count, c.length);
 		
-		last = count + c.length - 1;
+		size = count + c.length;
 
 	}
 
 	@Override
 	public void addAll(int index, Object[] c) {
 
-        if(index < 0 || index > size())
+        if(index < 0 || index > size)
             throw new IndexOutOfBoundsException();
 
         Object[] tmp = new Object[array.length + c.length];
@@ -83,7 +74,7 @@ public class MyArrayList implements MyList {
             System.arraycopy(array, index, tmp, c.length + index, array.length - index);
         }
 
-        last += c.length;
+        size += c.length;
 
         array = tmp;
 
@@ -92,7 +83,7 @@ public class MyArrayList implements MyList {
 	@Override
 	public Object get(int index) {
 
-        if(index < 0 || index >= size())
+        if(index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
 
 		return array[index];
@@ -101,7 +92,7 @@ public class MyArrayList implements MyList {
 	@Override
 	public Object remove(int index) {
 
-        if(index < 0 || index >= size())
+        if(index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
 
 
@@ -112,8 +103,7 @@ public class MyArrayList implements MyList {
         System.arraycopy(array, index + 1, tmp, index, array.length - (index + 1));
 
         array = tmp;
-
-		--last;
+		size--;
 
 		return obj;
 
@@ -122,7 +112,7 @@ public class MyArrayList implements MyList {
 	@Override
 	public void set(int index, Object element)   {
 
-        if(index < 0 || index >= size())
+        if(index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
 
 
@@ -132,7 +122,7 @@ public class MyArrayList implements MyList {
 	@Override
 	public int indexOf(Object o) {
 
-		for(int i = 0; i <= last; ++i) {
+		for(int i = 0; i < size; ++i) {
 			if(array[i].equals(o))
 				return i;
 		}
@@ -143,7 +133,7 @@ public class MyArrayList implements MyList {
 	@Override
 	public int size() {
 
-		return last + 1;
+		return size;
 	}
 
 	@Override
@@ -151,27 +141,26 @@ public class MyArrayList implements MyList {
 
 		for(int i = 0; i < array.length; ++i)
 			array[i] = null;
-			
-		this.last = -1;
+		this.size = 0;
 	}
 
 	@Override
 	public boolean isEmpty() {
 
-		return (last == -1);
+		return (size == 0);
 	}
 
 	@Override
 	public Object[] toArray() {
 
-		Object[] result = new Object[last + 1];
+		Object[] result = new Object[size];
         if(result.length > 0)
-		    System.arraycopy(array, 0, result, 0, last + 1);
+		    System.arraycopy(array, 0, result, 0, size);
 
 		return result;
 	}
 
-    public void ensureCapacity(int minCapacity) {
+    public final void ensureCapacity(int minCapacity) {
 
         if(minCapacity < 0)
             throw new IllegalArgumentException();
@@ -191,18 +180,12 @@ public class MyArrayList implements MyList {
 
 	}
 
-    public String toString() { // - возвращает строку, в которой через запятую выводятся значения элементов в коллекции
-
-        if(last < 0)
-            return "";
+    public String toString() {
 
         StringBuilder str = new StringBuilder();
-
-        str.append(array[0]);
-        for(int i = 1; i <= last; ++i)
+        for(int i = 0; i < size; ++i)
             str.append("," + array[i]);
-
-        return str.toString();
+        return str.substring(1);
     }
 
 }
