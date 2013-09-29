@@ -99,7 +99,7 @@ public class MyArrayList implements IMyList{
 	public Object remove(int index) {
 
 		if(index > last)
-			throw new ArrayIndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException();//ArrayIndexOutOfBoundsException();
 
 		Object obj = array[index];
 		

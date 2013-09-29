@@ -110,14 +110,20 @@ public class MyLinkedList implements IMyList {
 	public Object remove(int index) { // - удаляет элемент по индексу
 		
 		Node toRemove = getNodeAtIndex(index);
-		if(toRemove != null) {
-			Node prev = toRemove.prev;
-			Node next = toRemove.next;
-			prev.next = next;
-			if(next != null)
-				next.prev = prev;
-		}
-		
+
+        Node prev = toRemove.prev;
+        Node next = toRemove.next;
+        if(prev != null)
+            prev.next = next;
+        if(next != null)
+            next.prev = prev;
+        if(prev == null)
+            head = next;
+        if(next == null)
+            tail = prev;
+
+        --size;
+
 		return toRemove.value;
 	}
 
