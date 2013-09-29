@@ -221,7 +221,7 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	public void clear() {// - удаляет содержимое коллекции
 		head = null;
 		tail = null;
-		
+        size = 0;
 	}
 	
 	public boolean isEmpty() { // - возвращает true если в коллекции нет элементов
@@ -247,18 +247,10 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	public String toString() { // - возвращает строку, в которой через запятую выводятся значения элементов в коллекции
 		
 		StringBuilder str = new StringBuilder();
-
-		Node n = head;
-		if(n != null) {
-			str.append(n.value);
-			n = n.next;
-		}
-		while(n != null) {
-			str.append(", " + n.value);
-			n = n.next;
-		}
-
-		return str.toString();
+        for(Object value: this){
+            str.append("," + value);
+        }
+		return str.substring(1);
 	}
 
 	//MyLinkedList interface
@@ -310,8 +302,7 @@ public class MyLinkedList implements IMyList, Iterable<Object>{
 	}
 	
 	 public void addLast(Object e){
-
-		 add(e, tail);
+		 add(e);
 	 }
 	
 	
