@@ -43,14 +43,12 @@ public class MyArrayList implements MyList {
 	@Override
 	public void addAll(Object[] c) {
 
-        int count = size;
-		if(c.length + (count) > array.length)
-            ensureCapacity(c.length + count);
+		if(size + c.length > array.length)
+            ensureCapacity(size + c.length);
+
+		System.arraycopy(c, 0, array, size, c.length);
 		
-		
-		System.arraycopy(c, 0, array, count, c.length);
-		
-		size = count + c.length;
+		size += c.length;
 
 	}
 
