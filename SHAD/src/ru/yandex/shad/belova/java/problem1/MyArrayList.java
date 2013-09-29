@@ -31,12 +31,9 @@ public class MyArrayList implements MyList {
 		
         Object[] tmp = new Object[array.length + 1];
         tmp[index] = element;
-        if(index == 0)
-            System.arraycopy(array, 0, tmp, 1, array.length);
-        else {
-            System.arraycopy(array, 0, tmp, 0, index);
-            System.arraycopy(array, index, tmp, index + 1, array.length - index);
-        }
+
+        System.arraycopy(array, 0, tmp, 0, index);
+        System.arraycopy(array, index, tmp, index + 1, array.length - index);
 
         array = tmp;
         size++;
