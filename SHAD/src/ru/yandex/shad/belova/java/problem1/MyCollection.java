@@ -3,7 +3,7 @@ package ru.yandex.shad.belova.java.problem1;
 import java.util.ListIterator;
 
 public class MyCollection {
-    //TODO: Add private constructor
+    private MyCollection(){};
 
     private static void swap(MyList a, int i, int j){
         Object temp = a.get(i);
@@ -135,6 +135,5 @@ public class MyCollection {
         quickSortClassic(a, start, i-2, pivotStrategy);
         quickSortClassic(a, i, end, pivotStrategy);
     }
-
 
 }

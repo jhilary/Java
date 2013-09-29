@@ -298,6 +298,5 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	 public void addLast(Object e){
 		 add(e);
 	 }
-	
-	
+
 }
