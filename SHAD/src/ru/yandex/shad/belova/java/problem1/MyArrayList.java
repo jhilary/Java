@@ -16,40 +16,17 @@ public class MyArrayList implements MyList {
 	
 	@Override
 	public void add(Object e) {
-
-        if(size == array.length)
-            ensureCapacity(array.length * 2);
-
-        array[size++] = e;
+        add(size(), e);
 	}
 
 	@Override
 	public void add(int index, Object element) {
-
-		if(index < 0 || index > size)
-			throw new IndexOutOfBoundsException();
-		
-        Object[] tmp = new Object[array.length + 1];
-        tmp[index] = element;
-
-        System.arraycopy(array, 0, tmp, 0, index);
-        System.arraycopy(array, index, tmp, index + 1, array.length - index);
-
-        array = tmp;
-        size++;
-
+		addAll(index, new Object[]{element});
 	}
 
 	@Override
 	public void addAll(Object[] c) {
-
-		if(size + c.length > array.length)
-            ensureCapacity(size + c.length);
-
-		System.arraycopy(c, 0, array, size, c.length);
-		
-		size += c.length;
-
+		addAll(size,c);
 	}
 
 	@Override
@@ -58,16 +35,15 @@ public class MyArrayList implements MyList {
         if(index < 0 || index > size)
             throw new IndexOutOfBoundsException();
 
-        Object[] tmp = new Object[array.length + c.length];
+        ensureCapacity(size + c.length);
 
-        System.arraycopy(array, 0, tmp, 0, index);
-        System.arraycopy(c, 0, tmp, index, c.length);
-        System.arraycopy(array, index, tmp, c.length + index, array.length - index);
+        Object[] tmp = new Object[size - index];
+
+        System.arraycopy(array, index, tmp, 0, size - index);
+        System.arraycopy(c, 0, array, index, c.length);
+        System.arraycopy(tmp, 0, array, c.length + index, size - index);
 
         size += c.length;
-
-        array = tmp;
-
 	}
 
 	@Override
@@ -122,21 +98,18 @@ public class MyArrayList implements MyList {
 
 	@Override
 	public int size() {
-
 		return size;
 	}
 
 	@Override
 	public void clear() {
-
-		for(int i = 0; i < array.length; ++i)
+		for(int i = 0; i < size; ++i)
 			array[i] = null;
 		this.size = 0;
 	}
 
 	@Override
 	public boolean isEmpty() {
-
 		return (size == 0);
 	}
 
@@ -144,8 +117,7 @@ public class MyArrayList implements MyList {
 	public Object[] toArray() {
 
 		Object[] result = new Object[size];
-        if(result.length > 0)
-		    System.arraycopy(array, 0, result, 0, size);
+        System.arraycopy(array, 0, result, 0, size);
 
 		return result;
 	}
@@ -165,9 +137,7 @@ public class MyArrayList implements MyList {
     }
 
     public int getCapacity() {
-
 	    return array.length;
-
 	}
 
     public String toString() {

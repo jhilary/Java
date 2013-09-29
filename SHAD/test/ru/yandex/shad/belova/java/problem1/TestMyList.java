@@ -62,15 +62,17 @@ public class TestMyList {
     @Test
     public void testAddAll(){
         list.addAll(new Object[]{4,5,6});
-        assertArrayEquals("Fail in adding elements with addAll", new Object[]{4,5,6}, list.toArray());
+        assertArrayEquals("Fail in adding elements with addAll in empty list", new Object[]{4,5,6}, list.toArray());
+        list.addAll(new Object[]{7});
+        assertArrayEquals("Fail in adding elements with addAll", new Object[]{4,5,6,7}, list.toArray());
         list.addAll(0, new Object[]{-1,-2,-3});
-        assertArrayEquals("Fail in adding first elements with addAll by index", new Object[]{-1,-2,-3,4,5,6}, list.toArray());
-        list.addAll(6, new Object[]{100,200,300});
-        assertArrayEquals("Fail in adding first elements with addAll by index", new Object[]{-1,-2,-3,4,5,6,100,200,300}, list.toArray());
+        assertArrayEquals("Fail in adding first elements with addAll by index", new Object[]{-1,-2,-3,4,5,6,7}, list.toArray());
+        list.addAll(7, new Object[]{100,200,300});
+        assertArrayEquals("Fail in adding first elements with addAll by index", new Object[]{-1,-2,-3,4,5,6,7,100,200,300}, list.toArray());
         list.addAll(1, new Object[]{});
-        assertArrayEquals("Fail in adding empty array", new Object[]{-1,-2,-3,4,5,6,100,200,300}, list.toArray());
+        assertArrayEquals("Fail in adding empty array", new Object[]{-1,-2,-3,4,5,6,7,100,200,300}, list.toArray());
         list.addAll(1, new Object[]{3,4});
-        assertArrayEquals("Fail in adding empty array", new Object[]{-1,3,4,-2,-3,4,5,6,100,200,300}, list.toArray());
+        assertArrayEquals("Fail in adding empty array", new Object[]{-1,3,4,-2,-3,4,5,6,7,100,200,300}, list.toArray());
     
     }
     
