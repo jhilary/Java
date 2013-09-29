@@ -71,8 +71,30 @@ public class MyCollection {
     }
     
     public static int binarySearch(MyArrayList list, Object key){
-        //TODO
-        return 0;
+        if(list.isEmpty())
+            return -1;
+        return binarySearch(list, 0, list.size()-1, key);
+    }
+
+    private static int binarySearch(MyArrayList list, int start, int end, Object key){
+
+        int index = start + (end-start)/2;
+
+        int compare = ((Integer)key).compareTo((Integer)list.get(index));
+
+        if(compare < 0){
+            if(start == index){
+                return -1*index - 1;
+            }
+            index = binarySearch(list,start,index-1,key);
+        }
+        if(compare > 0){
+            if(end == index){
+                return -1*(index + 1) - 1;
+            }
+            index = binarySearch(list,index+1, end, key);
+        }
+        return index;
     }
 
     public static void quickSortClassic (MyArrayList a, IPivotStrategy pivotStrategy) {

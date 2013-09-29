@@ -71,10 +71,10 @@ public class TestMyCollection {
         assertEquals("Failed if list has one element equals to key", 0, index);
         
         index = MyCollection.binarySearch(a, 2);
-        assertEquals("Failed if list has one element less then key", -1, index);
+        assertEquals("Failed if list has one element greater then key", -1, index);
         
         index = MyCollection.binarySearch(a, 4);
-        assertEquals("Failed if list has one element greater then key", -2, index);
+        assertEquals("Failed if list has one element less then key", -2, index);
         
         a.add(5);
         
