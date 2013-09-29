@@ -227,16 +227,6 @@ public class MyLinkedList implements IMyList {
 
         ++size;
 
-        //////////
-
-//        if(head != null) {
-//    		Node tmp = head;
-//            head = new Node(e, null);
-//            head.next = tmp;
-//            tmp.prev = head;
-//        }
-//        else
-//            head = new Node(e, null);
 	}
 	
 	 public void addLast(Object e){

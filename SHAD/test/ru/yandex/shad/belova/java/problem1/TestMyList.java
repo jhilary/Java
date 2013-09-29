@@ -202,7 +202,7 @@ public class TestMyList {
     
     @Test
     public void testToString(){
-        list.add(new Object[]{1,4,-1,1000});
+        list.addAll(new Object[]{1,4,-1,1000});
         assertEquals("String equality failed", "1,4,-1,1000", list.toString());
     }
     

@@ -69,7 +69,20 @@ public class MyArrayList implements IMyList{
 	@Override
 	public void addAll(int index, Object[] c) {
 
-		throw new RuntimeException("MyArrayList.addAll() is not implemented");
+        Object[] tmp = new Object[array.length + c.length];
+        if(index == 0) {
+            System.arraycopy(c, 0, tmp, 0, c.length);
+            System.arraycopy(array, 0, tmp, c.length - 1, array.length);
+        }
+        else{
+            System.arraycopy(array, 0, tmp, 0, index);
+            System.arraycopy(c, 0, tmp, index, c.length);
+            System.arraycopy(array, index, tmp, c.length + index, array.length - index);
+        }
+
+        last += c.length;
+
+        array = tmp;
 
 	}
 
@@ -134,7 +147,7 @@ public class MyArrayList implements IMyList{
 		for(int i = 0; i < array.length; ++i)
 			array[i] = null;
 			
-		this.last = 0;
+		this.last = -1;
 	}
 
 	@Override
@@ -146,9 +159,9 @@ public class MyArrayList implements IMyList{
 	@Override
 	public Object[] toArray() {
 
-        //int size = (last != -1 ? last : 0);
 		Object[] result = new Object[last + 1];
-		System.arraycopy(array, 0, result, 0, last + 1);
+        if(result.length > 0)
+		    System.arraycopy(array, 0, result, 0, last + 1);
 
 		return result;
 	}
@@ -172,4 +185,19 @@ public class MyArrayList implements IMyList{
 	    return array.length;
 
 	}
+
+    public String toString() { // - возвращает строку, в которой через запятую выводятся значения элементов в коллекции
+
+        if(last < 0)
+            return "";
+
+        StringBuilder str = new StringBuilder();
+
+        str.append(array[0]);
+        for(int i = 1; i <= last; ++i)
+            str.append("," + array[i]);
+
+        return str.toString();
+    }
+
 }
