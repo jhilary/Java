@@ -3,7 +3,7 @@ package ru.yandex.shad.belova.java.problem1;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList implements IMyList, Iterable<Object>{
+public class MyLinkedList implements MyList, Iterable<Object>{
 
 
     public class MyLinkedListIterator implements ListIterator<Object> {

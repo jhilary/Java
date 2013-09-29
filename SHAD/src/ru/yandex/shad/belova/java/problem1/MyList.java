@@ -1,6 +1,6 @@
 package ru.yandex.shad.belova.java.problem1;
 
-public interface IMyList {
+public interface MyList {
 		
 	void add(Object e); // – добавляет элемент в конец коллекции
 

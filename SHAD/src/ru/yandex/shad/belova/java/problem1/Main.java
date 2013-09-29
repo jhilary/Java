@@ -7,7 +7,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		IMyList linkedList = MyListFactory.createList(MyListFactory.TYPE.LINKED_LIST);
+		MyList linkedList = MyListFactory.createList(MyListFactory.TYPE.LINKED_LIST);
 		linkedList.add(1);
 		linkedList.add(2);
 		linkedList.set(0, 2);

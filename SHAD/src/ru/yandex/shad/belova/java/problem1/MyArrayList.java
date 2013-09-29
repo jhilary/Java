@@ -1,6 +1,6 @@
 package ru.yandex.shad.belova.java.problem1;
 
-public class MyArrayList implements IMyList{
+public class MyArrayList implements MyList {
 
 	private static final int DEFAULT_SIZE = 10;
 	private Object[] array = new Object[0];

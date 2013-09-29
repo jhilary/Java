@@ -8,7 +8,7 @@ public class MyListFactory {
 	}
 	
 
-	static IMyList createList(TYPE t) {
+	static MyList createList(TYPE t) {
 
 		switch(t){
 		

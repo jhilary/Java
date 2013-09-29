@@ -1,12 +1,11 @@
 package ru.yandex.shad.belova.java.problem1;
 
-import java.util.Iterator;
 import java.util.ListIterator;
 
 public class MyCollection {
     //TODO: Add private constructor
 
-    private static void swap(IMyList a, int i, int j){
+    private static void swap(MyList a, int i, int j){
         Object temp = a.get(i);
         a.set(i, a.get(j));
         a.set(j, temp);

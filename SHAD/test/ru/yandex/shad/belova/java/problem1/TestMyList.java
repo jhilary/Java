@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 @RunWith(value = Parameterized.class)
 public class TestMyList {
     private MyListFactory.TYPE type;
-    private IMyList list;
+    private MyList list;
     
     @Parameters(name="{0}")
     public static List<Object[]> classes(){
@@ -46,15 +46,15 @@ public class TestMyList {
         list.add(1);
         assertArrayEquals("Fail in adding/getting 1", new Object[]{1}, list.toArray());
         list.add(2);
-        assertArrayEquals("Fail in adding element 2 with add", new Object[]{1,2}, list.toArray());
+        assertArrayEquals("Fail in adding element 2 with add", new Object[]{1, 2}, list.toArray());
         list.add(3);
-        assertArrayEquals("Fail in adding element 3 with add", new Object[]{1,2,3}, list.toArray());
+        assertArrayEquals("Fail in adding element 3 with add", new Object[]{1, 2, 3}, list.toArray());
         list.add(0, 5);
-        assertArrayEquals("Fail in adding first element with add by index", new Object[]{5,1,2,3}, list.toArray());
+        assertArrayEquals("Fail in adding first element with add by index", new Object[]{5, 1, 2, 3}, list.toArray());
         list.add(3, 10);
-        assertArrayEquals("Fail in adding middle element with add by index", new Object[]{5,1,2,10,3}, list.toArray());
+        assertArrayEquals("Fail in adding middle element with add by index", new Object[]{5, 1, 2, 10, 3}, list.toArray());
         list.add(2, 4);
-        assertArrayEquals("Fail in adding other middle element with add by index", new Object[]{5,1,4,2,10,3}, list.toArray());
+        assertArrayEquals("Fail in adding other middle element with add by index", new Object[]{5, 1, 4, 2, 10, 3}, list.toArray());
         list.add(6, 25);
         assertArrayEquals("Fail in adding last element with add by index", new Object[]{5,1,4,2,10,3,25}, list.toArray());
     }
@@ -160,7 +160,7 @@ public class TestMyList {
     @Test
     public void testToArray(){
         assertArrayEquals("On empty list failed", new Object[]{}, list.toArray());
-        list.addAll(new Object[]{1,4,-1,1000});
+        list.addAll(new Object[]{1, 4, -1, 1000});
         assertArrayEquals("On list failed", new Object[]{1,4,-1,1000}, list.toArray());
     }
     
@@ -214,7 +214,7 @@ public class TestMyList {
     
     @Test
     public void testToString(){
-        list.addAll(new Object[]{1,4,-1,1000});
+        list.addAll(new Object[]{1, 4, -1, 1000});
         assertEquals("String equality failed", "1,4,-1,1000", list.toString());
     }
     
