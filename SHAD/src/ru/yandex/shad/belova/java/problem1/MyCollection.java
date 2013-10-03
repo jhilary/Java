@@ -53,6 +53,7 @@ public class MyCollection {
     }
     
     public static void copy(MyLinkedList dest, MyLinkedList src){
+        dest.clear();
         for(Object o: src){
             dest.add(o);
         }

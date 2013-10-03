@@ -252,6 +252,11 @@ public class TestMyList {
         assertEquals("First-last problem", 0, list.indexOf(1));
         assertEquals("Behind problem", 1, list.indexOf(2));
         assertEquals("Non exist problem", -1, list.indexOf(7));
+        list.add(null);
+        assertEquals("Null exists", 8, list.indexOf(null));
+        list.remove(list.size()-1);
+        assertEquals("Null not exists", -1, list.indexOf(null));
+
     }
  
 }

@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class MyLinkedList implements MyList, Iterable<Object>{
 
 
-    public class MyLinkedListIterator implements ListIterator<Object> {
+    private class MyLinkedListIterator implements ListIterator<Object> {
 
         private Node returned;
         private Node current;
@@ -86,7 +86,7 @@ public class MyLinkedList implements MyList, Iterable<Object>{
         return new MyLinkedListIterator(index);
     }
 
-    class Node {
+    private static class Node {
 		Object value;
 		private Node prev;
 		private Node next;
@@ -115,18 +115,33 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	
 	private Node head;
 	private Node tail;
-	int size;
-	
-	private Node getNodeAtIndex(int index) {
+	private int size;
 
-		if(index < 0 || index > size()-1)
-			throw new IndexOutOfBoundsException();
+    private void checkAddIndex(int index){
+        if(index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+    }
+
+    private void checkSetGetRemoveIndex(int index){
+        if(index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+    }
+
+	private Node getNodeAtIndex(int index) {
+        checkSetGetRemoveIndex(index);
 
 		Node currentNode = head;
-		for(int i = 0; i < index; i++) {
-			currentNode = currentNode.next;
-		}
-		
+        if(index < size/2){
+            for(int i = 0; i < index; i++) {
+                currentNode = currentNode.next;
+            }
+        } else {
+            currentNode = tail;
+            for(int i = size - 1; i > index; i--) {
+                currentNode = currentNode.prev;
+            }
+        }
+
 		return currentNode;
 
 	}
@@ -137,7 +152,7 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 		
 		return n;
 	}
-	
+
 	public void add(Object e) { // – добавляет элемент в конец коллекции
 
 		tail = add(e, tail);
@@ -148,8 +163,7 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 
 	public void add(int index, Object element) { //– добавляет элемент в указанное место коллекции
 
-        if(index < 0 || index > size)
-            throw new IndexOutOfBoundsException();
+        checkAddIndex(index);
         if(index == 0){
             Node tmp = head;
             head = new Node(element, null);
@@ -158,7 +172,10 @@ public class MyLinkedList implements MyList, Iterable<Object>{
                 tail = head;
             }
         } else {
-            add(element, getNodeAtIndex(index-1));
+            Node elementNode = add(element, getNodeAtIndex(index-1));
+            if(index == size){
+                tail = elementNode;
+            }
         }
         size++;
 	}
@@ -171,24 +188,38 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 
 	public void addAll(int index, Object[] c) { // - добавляет массив элементов в указанное место коллекции
 
-        if(index < 0 || index > size()){
-            throw new IndexOutOfBoundsException();
+        checkAddIndex(index);
+        if(c.length == 0){
+            return;
+        }
+        if(index == size){
+            addAll(c);
+        } else {
+            if(index == 0){
+                for(int i = c.length-1; i >= 0; i--){
+                    add(0, c[i]);
+                }
+            } else {
+                Node tmp = tail;
+                tail = add(c[0], getNodeAtIndex(index-1));
+                size++;
+                for(int i = 1; i < c.length; i++){
+                    add(c[i]);
+                }
+                tail = tmp;
+            }
         }
 
-        for(int i = index; i < index+c.length; i++){
-            add(i, c[i-index]);
-        }
 	}
 
 	public Object get(int index) { // – возвращает элемент по индексу
+        checkSetGetRemoveIndex(index);
 		return getNodeAtIndex(index).value;
 	}
 
 	public Object remove(int index) { // - удаляет элемент по индексу
 
-        if(index < 0 || index > size()-1){
-            throw new IndexOutOfBoundsException();
-        }
+        checkSetGetRemoveIndex(index);
 		Node toRemove = getNodeAtIndex(index);
         Node prev = toRemove.prev;
         Node next = toRemove.next;
@@ -207,9 +238,7 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	}
 
 	public void set(int index, Object element) { // – изменяет значение элемента
-        if(index < 0 || index > size()-1){
-            throw new IndexOutOfBoundsException();
-        }
+        checkSetGetRemoveIndex(index);
 		getNodeAtIndex(index).value = element;
 	}
 
@@ -217,10 +246,9 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 		int size = size();
 		for(int i = 0; i < size; ++i) {
 			Node node = getNodeAtIndex(i);
-			if(node.value.equals(o))
+			if(o == null? node.value == null : node.value.equals(o))
 				return i;
 		}
-		
 		return -1;
 	}
 
@@ -248,7 +276,8 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 		
 		return result;
 	}
-	
+
+    @Override
 	public String toString() { // - возвращает строку, в которой через запятую выводятся значения элементов в коллекции
 		
 		StringBuilder str = new StringBuilder();
@@ -269,7 +298,6 @@ public class MyLinkedList implements MyList, Iterable<Object>{
 	}
 	
 	public Object getLast() {
-
 		if(isEmpty())
 			throw new NoSuchElementException();
 

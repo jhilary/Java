@@ -24,20 +24,17 @@ public class TestMyCollection {
         MyCollection.copy(b, a);
         assertArrayEquals("Copied arrays are not equal", a.toArray(), b.toArray());
 
-        b = new MyLinkedList();
         a.add(3);
-        MyCollection.copy(b, a);
-        assertArrayEquals("There are have being copied only links", a.toArray(), b.toArray());
+        assertEquals("There are have being copied only links", 4, b.size());
 
         b = new MyLinkedList();
         b.add(2);
         MyCollection.copy(b, a);
-        a.addFirst(2);
         assertArrayEquals("Copying failed if there are elements in second collection", a.toArray(), b.toArray());
         
         a = new MyLinkedList();
         MyCollection.copy(b, a);
-        assertArrayEquals("Copying failed if there are no elements in first collection", b.toArray(), b.toArray());
+        assertArrayEquals("Copying failed if there are no elements in first collection", a.toArray(), b.toArray());
     }
     
     @Test

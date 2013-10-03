@@ -3,7 +3,7 @@ package ru.yandex.shad.belova.java.problem1;
 public class MyArrayList implements MyList {
 
 	private static final int DEFAULT_SIZE = 10;
-	private Object[] array = new Object[0];
+	private Object[] array;
 	private int size = 0;
 
 	public MyArrayList(){
@@ -11,7 +11,9 @@ public class MyArrayList implements MyList {
 	}
 	
 	public MyArrayList(int initialCapacity){
-        ensureCapacity(initialCapacity);
+        if(initialCapacity < 0)
+            throw new IllegalArgumentException();
+        array = new Object[initialCapacity];
 	}
 	
 	@Override
@@ -21,8 +23,25 @@ public class MyArrayList implements MyList {
 
 	@Override
 	public void add(int index, Object element) {
-		addAll(index, new Object[]{element});
+        checkAddIndex(index);
+
+        ensureCapacity(size + 1);
+
+        System.arraycopy(array, index, array, index+1, size - index);
+        array[index] = element;
+
+        size++;
 	}
+
+    private void checkAddIndex(int index){
+        if(index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+    }
+
+    private void checkSetGetRemoveIndex(int index){
+        if(index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+    }
 
 	@Override
 	public void addAll(Object[] c) {
@@ -31,36 +50,25 @@ public class MyArrayList implements MyList {
 
 	@Override
 	public void addAll(int index, Object[] c) {
-
-        if(index < 0 || index > size)
-            throw new IndexOutOfBoundsException();
+        checkAddIndex(index);
 
         ensureCapacity(size + c.length);
 
-        Object[] tmp = new Object[size - index];
-
-        System.arraycopy(array, index, tmp, 0, size - index);
+        System.arraycopy(array, index, array, c.length + index, size - index);
         System.arraycopy(c, 0, array, index, c.length);
-        System.arraycopy(tmp, 0, array, c.length + index, size - index);
 
         size += c.length;
 	}
 
 	@Override
 	public Object get(int index) {
-
-        if(index < 0 || index >= size)
-            throw new IndexOutOfBoundsException();
-
+        checkSetGetRemoveIndex(index);
 		return array[index];
 	}
 
 	@Override
 	public Object remove(int index) {
-
-        if(index < 0 || index >= size)
-            throw new IndexOutOfBoundsException();
-
+        checkSetGetRemoveIndex(index);
 
         Object obj = array[index];
 		
@@ -78,10 +86,7 @@ public class MyArrayList implements MyList {
 	@Override
 	public void set(int index, Object element)   {
 
-        if(index < 0 || index >= size)
-            throw new IndexOutOfBoundsException();
-
-
+        checkSetGetRemoveIndex(index);
         array[index] = element;
 	}
 
@@ -89,7 +94,7 @@ public class MyArrayList implements MyList {
 	public int indexOf(Object o) {
 
 		for(int i = 0; i < size; ++i) {
-			if(array[i].equals(o))
+			if(o == null? array[i] == null : array[i].equals(o))
 				return i;
 		}
 		
@@ -140,6 +145,7 @@ public class MyArrayList implements MyList {
 	    return array.length;
 	}
 
+    @Override
     public String toString() {
 
         StringBuilder str = new StringBuilder();
