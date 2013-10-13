@@ -12,6 +12,7 @@ import ru.yandex.shad.belova.java.problem1.MyList;
 import ru.yandex.shad.belova.java.problem1.MyArrayList;
 
 import java.util.Date;
+import java.util.UUID;
 
 class TravelCardException extends Exception {
     //
@@ -77,4 +78,68 @@ public class TravelCardRegistry {
 
         passStates.add(passState);
     }
+
+    private class MetroTravelCard <T extends CardValidator> implements TravelCard {
+
+        private final String id = UUID.randomUUID().toString();
+        private OwnerType ownerType;
+        private UsageType usageType;
+        private T validator;
+
+
+        public MetroTravelCard(OwnerType ownerType, UsageType usageType, T validator){
+
+            this.ownerType = ownerType;
+            this.usageType = usageType;
+            this.validator = validator;
+
+        }
+
+
+        @Override
+        public String getID() {
+
+            return id;
+        }
+
+        @Override
+        public OwnerType getOwnerType() {
+
+            return ownerType;
+        }
+
+        @Override
+        public UsageType getUsageType() {
+
+            return usageType;
+        }
+
+        @Override
+        public CardInfoDetails getCardInfoDetails() {
+
+            CardInfoDetails cardInfo = new CardInfoDetails();
+            validator.fillCardInfoDetails(cardInfo);
+
+            return cardInfo;
+        }
+
+        @Override
+        public void updateCardInfoDetails(CardInfoDetails cardInfo) {
+
+            validator.updateCardInfoDetails(cardInfo);
+        }
+
+        @Override
+        public boolean validate(int ticketCost) {
+
+            return validator.validate(ticketCost);
+        }
+
+        @Override
+        public void pay(int ticketCost) {
+
+            validator.pay(ticketCost);
+        }
+    }
+
 }

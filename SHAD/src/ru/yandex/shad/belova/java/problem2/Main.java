@@ -27,7 +27,6 @@ public class Main {
         gt.passPassenger(accumulativeTC);
         gt.passPassenger(dateExpirable);
         gt.passPassenger(tripCountable);
-
     }
 
 }
