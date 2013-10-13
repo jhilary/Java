@@ -14,18 +14,14 @@ import ru.yandex.shad.belova.java.problem1.MyArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-class TravelCardException extends Exception {
-    //
-}
-
-public class TravelCardRegistry {
+public class CardRegistry {
 
     private static class SingletonHolder {
 
-        public static final TravelCardRegistry instance = new TravelCardRegistry();
+        public static final CardRegistry instance = new CardRegistry();
     }
 
-    public static TravelCardRegistry getInstance() {
+    public static CardRegistry getInstance() {
 
         return SingletonHolder.instance;
     }
@@ -35,30 +31,30 @@ public class TravelCardRegistry {
     private int ticketCost;
 
     ///// FACTORY METHODS TO CREATE CARDS
-    public TravelCard acquireTravelCard(TravelCard.OwnerType ownerType, TripCountable.Type type){
+    public Card acquireTravelCard(Card.OwnerType ownerType, TripCardProcessingStrategy.Type type){
 
-        TravelCard tc = new MetroTravelCard<TripCountable>(
-                                            ownerType, TravelCard.UsageType.Trips, new TripCountable(type));
+        Card tc = new MetroTravelCard<TripCardProcessingStrategy>(
+                                            ownerType, Card.UsageType.Trips, new TripCardProcessingStrategy(type));
 
         travelCards.add(tc);
         return tc;
     }
 
-    public TravelCard acquireTravelCard(
-                                    TravelCard.OwnerType ownerType,
-                                    DateExpirable.Type usageType,
+    public Card acquireTravelCard(
+                                    Card.OwnerType ownerType,
+                                    PeriodCardProcessingStrategy.Type usageType,
                                     Date startDate){
 
-        TravelCard tc = new MetroTravelCard(ownerType, TravelCard.UsageType.Period, new DateExpirable(usageType, startDate));
+        Card tc = new MetroTravelCard(ownerType, Card.UsageType.Period, new PeriodCardProcessingStrategy(usageType, startDate));
         travelCards.add(tc);
         return tc;
     }
 
-    public TravelCard acquireTravelCard(int balance){
-        TravelCard tc = new MetroTravelCard(
-                                    TravelCard.OwnerType.Regular,
-                                    TravelCard.UsageType.Accumulative,
-                                    new Accumulative(balance));
+    public Card acquireTravelCard(int balance){
+        Card tc = new MetroTravelCard(
+                                    Card.OwnerType.Regular,
+                                    Card.UsageType.Accumulative,
+                                    new AccumulativeCardProcessingStrategy(balance));
         travelCards.add(tc);
         return tc;
     }
@@ -76,7 +72,7 @@ public class TravelCardRegistry {
         return ticketCost;
     }
 
-    public void setTravelCardPassState(TravelCardPassState passState) {
+    public void setTravelCardPassState(CardPassState passState) {
 
         passStates.add(passState);
     }
@@ -84,17 +80,17 @@ public class TravelCardRegistry {
     public void rechargeCardBalance(String cardID, int amount) {
         // TODO - rewrite search appropriately
         for(int i = 0; i < travelCards.size(); ++i) {
-            TravelCard tc = (TravelCard)travelCards.get(i);
+            Card tc = (Card)travelCards.get(i);
             if(tc.getID().equals(cardID)){
-                CardInfoDetails cardInfo = new CardInfoDetails();
+                CardInfo cardInfo = new CardInfo();
                 cardInfo.setBalance(amount);
-                tc.updateCardInfoDetails(cardInfo);
+                tc.updateCardInfo(cardInfo);
                 break;
             }
         }
     }
 
-    private class MetroTravelCard <T extends CardValidator> implements TravelCard {
+    private class MetroTravelCard <T extends CardProcessingStrategy> implements Card {
 
         private final String id = UUID.randomUUID().toString();
         private OwnerType ownerType;
@@ -130,16 +126,16 @@ public class TravelCardRegistry {
         }
 
         @Override
-        public CardInfoDetails getCardInfoDetails() {
+        public CardInfo getCardInfo() {
 
-            CardInfoDetails cardInfo = new CardInfoDetails();
+            CardInfo cardInfo = new CardInfo();
             validator.fillCardInfoDetails(cardInfo);
 
             return cardInfo;
         }
 
         @Override
-        public void updateCardInfoDetails(CardInfoDetails cardInfo) {
+        public void updateCardInfo(CardInfo cardInfo) {
 
             validator.updateCardInfoDetails(cardInfo);
         }

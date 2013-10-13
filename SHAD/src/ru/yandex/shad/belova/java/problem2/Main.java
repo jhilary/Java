@@ -14,29 +14,29 @@ public class Main {
 
     public static void main(String[] args) {
 
-        TravelCard accumulativeTC  = TravelCardRegistry.getInstance().acquireTravelCard(100);
-        TravelCard dateExpirable = TravelCardRegistry.getInstance().acquireTravelCard(
-                                                                            TravelCard.OwnerType.Student,
-                                                                            DateExpirable.Type.TenDays,
+        Card accumulativeTC  = CardRegistry.getInstance().acquireTravelCard(100);
+        Card dateExpirable = CardRegistry.getInstance().acquireTravelCard(
+                                                                            Card.OwnerType.Student,
+                                                                            PeriodCardProcessingStrategy.Type.TenDays,
                                                                             new Date());
-        TravelCard tripCountable = TravelCardRegistry.getInstance().acquireTravelCard(
-                                                                            TravelCard.OwnerType.Pupil,
-                                                                            TripCountable.Type.FiveTrips);
+        Card tripCountable = CardRegistry.getInstance().acquireTravelCard(
+                                                                            Card.OwnerType.Pupil,
+                                                                            TripCardProcessingStrategy.Type.FiveTrips);
 
         Gateway gt = new Gateway();
         gt.passPassenger(accumulativeTC);
         gt.passPassenger(dateExpirable);
         gt.passPassenger(tripCountable);
 
-        CardInfoDetails cardInfo = accumulativeTC.getCardInfoDetails();
+        CardInfo cardInfo = accumulativeTC.getCardInfo();
         System.out.println(cardInfo.getBalance());
         cardInfo.setBalance(999);
-        accumulativeTC.updateCardInfoDetails(cardInfo);
-        cardInfo = accumulativeTC.getCardInfoDetails();
+        accumulativeTC.updateCardInfo(cardInfo);
+        cardInfo = accumulativeTC.getCardInfo();
         System.out.println(cardInfo.getBalance());
 
-        TravelCardRegistry.getInstance().rechargeCardBalance(accumulativeTC.getID(), 5000);
-        cardInfo = accumulativeTC.getCardInfoDetails();
+        CardRegistry.getInstance().rechargeCardBalance(accumulativeTC.getID(), 5000);
+        cardInfo = accumulativeTC.getCardInfo();
         System.out.println(cardInfo.getBalance());
 
     }

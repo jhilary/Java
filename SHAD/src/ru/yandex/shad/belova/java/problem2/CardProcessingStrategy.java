@@ -12,17 +12,17 @@ import java.util.GregorianCalendar;
  * To change this template use File | Settings | File Templates.
  */
 
-public interface CardValidator {
+public interface CardProcessingStrategy {
 
     boolean validate(int ticketCost);
     void pay(int ticketCost);
 
-    void fillCardInfoDetails(CardInfoDetails cardInfo);
-    void updateCardInfoDetails(CardInfoDetails cardInfo);
+    void fillCardInfoDetails(CardInfo cardInfo);
+    void updateCardInfoDetails(CardInfo cardInfo);
 
 }
 
-class DateExpirable implements CardValidator {
+class PeriodCardProcessingStrategy implements CardProcessingStrategy {
 
     Type type;
     private Date startDate;
@@ -33,7 +33,7 @@ class DateExpirable implements CardValidator {
         Month
     }
 
-    public DateExpirable(Type type, Date startDate) {
+    public PeriodCardProcessingStrategy(Type type, Date startDate) {
         this.type = type;
         this.startDate = startDate;
         startCalendar.setTime(this.startDate);
@@ -52,7 +52,7 @@ class DateExpirable implements CardValidator {
     }
 
     @Override
-    public void fillCardInfoDetails(CardInfoDetails cardInfo) {
+    public void fillCardInfoDetails(CardInfo cardInfo) {
 
         cardInfo.setValidFrom(startDate);
 
@@ -72,12 +72,12 @@ class DateExpirable implements CardValidator {
     }
 
     @Override
-    public void updateCardInfoDetails(CardInfoDetails cardInfo) {
+    public void updateCardInfoDetails(CardInfo cardInfo) {
         //do nothing
     }
 }
 
-class TripCountable implements CardValidator {
+class TripCardProcessingStrategy implements CardProcessingStrategy {
 
     public enum Type {
         FiveTrips(5),
@@ -97,7 +97,7 @@ class TripCountable implements CardValidator {
     private final Type type;
     private int numTrips;
 
-    public TripCountable(Type type) {
+    public TripCardProcessingStrategy(Type type) {
 
         this.type = type;
         numTrips = type.getNumTrips();
@@ -115,21 +115,21 @@ class TripCountable implements CardValidator {
     }
 
     @Override
-    public void fillCardInfoDetails(CardInfoDetails cardInfo) {
+    public void fillCardInfoDetails(CardInfo cardInfo) {
         cardInfo.setNumberOfTripsLeft(numTrips);
     }
 
     @Override
-    public void updateCardInfoDetails(CardInfoDetails cardInfo) {
+    public void updateCardInfoDetails(CardInfo cardInfo) {
         //do nothing
     }
 }
 
-class Accumulative implements CardValidator {
+class AccumulativeCardProcessingStrategy implements CardProcessingStrategy {
 
     private int balance;
 
-    public Accumulative(int balance) {
+    public AccumulativeCardProcessingStrategy(int balance) {
         this.balance = balance;
     }
 
@@ -144,12 +144,12 @@ class Accumulative implements CardValidator {
     }
 
     @Override
-    public void fillCardInfoDetails(CardInfoDetails cardInfo) {
+    public void fillCardInfoDetails(CardInfo cardInfo) {
         cardInfo.setBalance(balance);
     }
 
     @Override
-    public void updateCardInfoDetails(CardInfoDetails cardInfo) {
+    public void updateCardInfoDetails(CardInfo cardInfo) {
         this.balance += cardInfo.getBalance();
     }
 }

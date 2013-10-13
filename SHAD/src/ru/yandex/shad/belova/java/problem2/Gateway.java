@@ -13,17 +13,17 @@ public class Gateway {
 
     private final String id = UUID.randomUUID().toString();
 
-    public boolean passPassenger(TravelCard tc) {
+    public boolean passPassenger(Card tc) {
 
         boolean result = false;
 
-        TravelCardPassState tcps = new TravelCardPassState();
+        CardPassState tcps = new CardPassState();
         tcps.gatewayID = id;
         tcps.travelCardID = tc.getID();
-        int ticketCost = TravelCardRegistry.getInstance().getTicketCost();
+        int ticketCost = CardRegistry.getInstance().getTicketCost();
         if(!tc.validate(ticketCost)) {
 
-            tcps.travelCardState = TravelCardPassState.State.Denied;
+            tcps.travelCardState = CardPassState.State.Denied;
             result = false;
         }
         else {
@@ -37,7 +37,7 @@ public class Gateway {
             }
         }
 
-        TravelCardRegistry.getInstance().setTravelCardPassState(tcps);
+        CardRegistry.getInstance().setTravelCardPassState(tcps);
 
         return result;
     }

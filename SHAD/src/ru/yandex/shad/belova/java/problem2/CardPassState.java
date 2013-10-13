@@ -7,7 +7,7 @@ package ru.yandex.shad.belova.java.problem2;
  * Time: 3:39 AM
  * To change this template use File | Settings | File Templates.
  */
-public class TravelCardPassState {
+public class CardPassState {
 
     public enum State {
         Allowed,

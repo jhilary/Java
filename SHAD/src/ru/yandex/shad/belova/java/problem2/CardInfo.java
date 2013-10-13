@@ -11,7 +11,7 @@ import java.util.Date;
  */
 
 
-public class CardInfoDetails {
+public class CardInfo {
 
     private boolean expired;
     private Date validFrom;

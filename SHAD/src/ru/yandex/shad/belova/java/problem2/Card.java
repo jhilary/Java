@@ -1,8 +1,5 @@
 package ru.yandex.shad.belova.java.problem2;
 
-import java.util.Date;
-import java.util.UUID;
-
 /**
  * Created with IntelliJ IDEA.
  * User: olegklymchuk
@@ -12,7 +9,7 @@ import java.util.UUID;
  */
 
 
-interface TravelCard {
+interface Card {
 
     enum OwnerType {
         Pupil, Student, Regular
@@ -26,8 +23,8 @@ interface TravelCard {
     OwnerType getOwnerType();
     UsageType getUsageType();
 
-    CardInfoDetails getCardInfoDetails();
-    void updateCardInfoDetails(CardInfoDetails cardInfo);
+    CardInfo getCardInfo();
+    void updateCardInfo(CardInfo cardInfo);
 
     boolean validate(int amount);
     void pay(int amount);
