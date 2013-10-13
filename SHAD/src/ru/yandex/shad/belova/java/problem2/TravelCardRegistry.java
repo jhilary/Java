@@ -34,6 +34,7 @@ public class TravelCardRegistry {
     private MyList passStates = new MyArrayList();
     private int ticketCost;
 
+    ///// FACTORY METHODS TO CREATE CARDS
     public TravelCard acquireTravelCard(TravelCard.OwnerType ownerType, TripCountable.Type type){
 
         TravelCard tc = new MetroTravelCard<TripCountable>(
@@ -61,6 +62,7 @@ public class TravelCardRegistry {
         travelCards.add(tc);
         return tc;
     }
+    ///////////
 
 
     public void setTicketCost(int cost) {
@@ -77,6 +79,19 @@ public class TravelCardRegistry {
     public void setTravelCardPassState(TravelCardPassState passState) {
 
         passStates.add(passState);
+    }
+
+    public void rechargeCardBalance(String cardID, int amount) {
+        // TODO - rewrite search appropriately
+        for(int i = 0; i < travelCards.size(); ++i) {
+            TravelCard tc = (TravelCard)travelCards.get(i);
+            if(tc.getID().equals(cardID)){
+                CardInfoDetails cardInfo = new CardInfoDetails();
+                cardInfo.setBalance(amount);
+                tc.updateCardInfoDetails(cardInfo);
+                break;
+            }
+        }
     }
 
     private class MetroTravelCard <T extends CardValidator> implements TravelCard {

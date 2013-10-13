@@ -27,6 +27,18 @@ public class Main {
         gt.passPassenger(accumulativeTC);
         gt.passPassenger(dateExpirable);
         gt.passPassenger(tripCountable);
+
+        CardInfoDetails cardInfo = accumulativeTC.getCardInfoDetails();
+        System.out.println(cardInfo.getBalance());
+        cardInfo.setBalance(999);
+        accumulativeTC.updateCardInfoDetails(cardInfo);
+        cardInfo = accumulativeTC.getCardInfoDetails();
+        System.out.println(cardInfo.getBalance());
+
+        TravelCardRegistry.getInstance().rechargeCardBalance(accumulativeTC.getID(), 5000);
+        cardInfo = accumulativeTC.getCardInfoDetails();
+        System.out.println(cardInfo.getBalance());
+
     }
 
 }
