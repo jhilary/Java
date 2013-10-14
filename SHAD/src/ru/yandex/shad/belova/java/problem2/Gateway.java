@@ -13,12 +13,13 @@ public class Gateway {
 
         boolean isPaid = card.pay();
 
-        PassState tcps = new PassState();
-        tcps.gatewayID = id;
-        tcps.cardID = card.getID();
-        tcps.isPassedIn = isPaid;
+        PassState passState = new PassState();
+        passState.gatewayID = id;
+        passState.ownerType = card.getOwnerType();
+        passState.usageType = card.getUsageType();
+        passState.isPassedIn = isPaid;
 
-        CardRegistry.getInstance().setPassState(tcps);
+        CardRegistry.getInstance().setPassState(passState);
 
         return isPaid;
     }

@@ -6,23 +6,24 @@ import org.joda.time.ReadablePeriod;
 
 public interface Card {
 
-    public enum OwnerType {
-        Pupil, Student, Regular
+    public interface Type{}
+    public enum OwnerType implements Type{
+        PUPIL, STUDENT, REGULAR
     }
 
-    public enum UsageType {
-        Period, Trips, Accumulative
+    public enum UsageType implements Type{
+        PERIOD, TRIPS, ACCUMULATIVE
     }
 
     public enum PeriodType {
-        Month{
+        MONTH {
             @Override
             public ReadablePeriod getPeriod(){
                 return Months.ONE;
             }
 
         },
-        TenDays{
+        TEN_DAYS {
             @Override
             public ReadablePeriod getPeriod(){
                 return Days.days(10);
@@ -32,8 +33,8 @@ public interface Card {
     }
 
     public enum TripsType {
-        FiveTrips(5),
-        TenTrips(10);
+        FIVE_TRIPS(5),
+        TEN_TRIPS(10);
 
         private int numTrips;
 

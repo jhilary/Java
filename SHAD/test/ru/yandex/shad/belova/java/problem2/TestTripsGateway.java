@@ -1,12 +1,9 @@
 package ru.yandex.shad.belova.java.problem2;
 
-import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 import ru.yandex.shad.belova.java.problem1.MyList;
-import ru.yandex.shad.belova.java.problem1.MyListFactory;
 import ru.yandex.shad.belova.java.problem2.Metropolitan.CardRegistry;
 
 import java.util.LinkedList;
@@ -33,9 +30,9 @@ public class TestTripsGateway {
     @Parameterized.Parameters(name="{0}")
     public static List<Object[]> classes(){
         LinkedList<Object[]> classes = new LinkedList<Object[]>();
-        classes.add(new Object[]{Card.OwnerType.Pupil});
-        classes.add(new Object[]{Card.OwnerType.Student});
-        classes.add(new Object[]{Card.OwnerType.Regular});
+        classes.add(new Object[]{Card.OwnerType.PUPIL});
+        classes.add(new Object[]{Card.OwnerType.STUDENT});
+        classes.add(new Object[]{Card.OwnerType.REGULAR});
         return classes;
     }
 
@@ -46,7 +43,7 @@ public class TestTripsGateway {
     @Test
     public void fiveTrips(){
         Card fiveTrips = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.TripsType.FiveTrips);
+                ownerType,Card.TripsType.FIVE_TRIPS);
 
         assertTrue("First", gt.passPassenger(fiveTrips));
         assertTrue("Second", gt.passPassenger(fiveTrips));
@@ -59,7 +56,7 @@ public class TestTripsGateway {
     @Test
     public void tenTrips(){
         Card tenTrips = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.TripsType.TenTrips);
+                ownerType,Card.TripsType.TEN_TRIPS);
 
         assertTrue("First", gt.passPassenger(tenTrips));
         assertTrue("Second", gt.passPassenger(tenTrips));

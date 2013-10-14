@@ -3,10 +3,8 @@ package ru.yandex.shad.belova.java.problem2;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 import ru.yandex.shad.belova.java.problem1.MyList;
-import ru.yandex.shad.belova.java.problem1.MyListFactory;
 import ru.yandex.shad.belova.java.problem2.Metropolitan.CardRegistry;
 
 import java.util.LinkedList;
@@ -33,9 +31,9 @@ public class TestPeriodGateway {
     @Parameterized.Parameters(name="{0}")
     public static List<Object[]> classes(){
         LinkedList<Object[]> classes = new LinkedList<Object[]>();
-        classes.add(new Object[]{Card.OwnerType.Pupil});
-        classes.add(new Object[]{Card.OwnerType.Student});
-        classes.add(new Object[]{Card.OwnerType.Regular});
+        classes.add(new Object[]{Card.OwnerType.PUPIL});
+        classes.add(new Object[]{Card.OwnerType.STUDENT});
+        classes.add(new Object[]{Card.OwnerType.REGULAR});
         return classes;
     }
 
@@ -46,14 +44,14 @@ public class TestPeriodGateway {
     @Test
     public void periodMonthBeforeStartDate(){
         Card periodMonth = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.PeriodType.Month,DateTime.now().plusDays(1));
+                ownerType,Card.PeriodType.MONTH,DateTime.now().plusDays(1));
         assertFalse("Before month started", gt.passPassenger(periodMonth));
     }
 
     @Test
     public void periodMonthAfterEndDate(){
         Card periodMonth = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.PeriodType.Month,DateTime.now().minusMonths(1).minusDays(1));
+                ownerType,Card.PeriodType.MONTH,DateTime.now().minusMonths(1).minusDays(1));
 
         assertFalse("After month ended", gt.passPassenger(periodMonth));
     }
@@ -61,7 +59,7 @@ public class TestPeriodGateway {
     @Test
     public void periodMonthInDate(){
         Card periodMonth = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.PeriodType.Month,DateTime.now());
+                ownerType,Card.PeriodType.MONTH,DateTime.now());
         Gateway gt = new Gateway();
         assertTrue("In month", gt.passPassenger(periodMonth));
     }
@@ -69,7 +67,7 @@ public class TestPeriodGateway {
     @Test
     public void periodTenDaysBeforeStartDate(){
         Card periodTenDays = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.PeriodType.TenDays,DateTime.now().plusDays(1));
+                ownerType,Card.PeriodType.TEN_DAYS,DateTime.now().plusDays(1));
         Gateway gt = new Gateway();
         assertFalse("Before 10 days started", gt.passPassenger(periodTenDays));
     }
@@ -77,7 +75,7 @@ public class TestPeriodGateway {
     @Test
     public void periodTenDaysAfterEndDate(){
         Card periodTenDays = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.PeriodType.TenDays,DateTime.now().minusDays(10).minusDays(1));
+                ownerType,Card.PeriodType.TEN_DAYS,DateTime.now().minusDays(10).minusDays(1));
         Gateway gt = new Gateway();
         assertFalse("After 10 days ended", gt.passPassenger(periodTenDays));
     }
@@ -85,7 +83,7 @@ public class TestPeriodGateway {
     @Test
     public void periodTenDaysInDate(){
         Card periodTenDays = CardRegistry.getInstance().acquireTravelCard(
-                ownerType,Card.PeriodType.TenDays,DateTime.now());
+                ownerType,Card.PeriodType.TEN_DAYS,DateTime.now());
         Gateway gt = new Gateway();
         assertTrue("In 10 days", gt.passPassenger(periodTenDays));
     }

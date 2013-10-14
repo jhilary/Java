@@ -1,7 +1,5 @@
 package ru.yandex.shad.belova.java.problem2;
 
-import org.joda.time.DateTime;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
