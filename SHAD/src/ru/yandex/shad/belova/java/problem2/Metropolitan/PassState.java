@@ -1,14 +1,11 @@
 package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
-public class CardPassState {
+import ru.yandex.shad.belova.java.problem2.Card;
 
-    public enum State {
-        Allowed,
-        Denied
-    }
+public class PassState {
 
     public String  gatewayID;
     public String  cardID;
-    public State   cardState;
+    public boolean isPassedIn;
 
 }
