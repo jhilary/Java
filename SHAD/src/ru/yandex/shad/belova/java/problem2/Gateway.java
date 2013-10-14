@@ -19,7 +19,7 @@ public class Gateway {
         passState.usageType = card.getUsageType();
         passState.isPassedIn = isPaid;
 
-        CardRegistry.getInstance().setPassState(passState);
+        CardRegistry.getInstance().setStatistics(passState);
 
         return isPaid;
     }

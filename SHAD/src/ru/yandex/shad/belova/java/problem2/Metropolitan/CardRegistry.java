@@ -12,12 +12,10 @@ import java.util.Map;
 public class CardRegistry {
 
     private static class SingletonHolder {
-
         public static final CardRegistry instance = new CardRegistry();
     }
 
     public static CardRegistry getInstance() {
-
         return SingletonHolder.instance;
     }
 
@@ -39,7 +37,7 @@ public class CardRegistry {
 
     private final int ticketCost = 1;
 
-    ///// FACTORY METHODS TO CREATE CARDS
+    // Factory methods for cards creation
     public Card acquireTravelCard(Card.OwnerType ownerType, Card.TripsType type){
 
         AggregatedCardInfo cardInfo = new AggregatedCardInfo();
@@ -79,7 +77,7 @@ public class CardRegistry {
         return ticketCost;
     }
 
-    public void setPassState(PassState passState) {
+    public void setStatistics(PassState passState) {
         boolean isPassed = passState.isPassedIn;
         if(isPassed){
             acceptStatistics.get(passState.usageType).increment();
