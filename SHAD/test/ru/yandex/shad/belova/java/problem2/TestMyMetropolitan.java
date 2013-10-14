@@ -118,6 +118,7 @@ public class TestMyMetropolitan {
         assertEquals("Test owner",Card.OwnerType.Regular, regularAccumulative.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Accumulative, regularAccumulative.getUsageType());
         regularAccumulative.validate(1);
+        regularAccumulative.pay(1);
     }
 
 }
