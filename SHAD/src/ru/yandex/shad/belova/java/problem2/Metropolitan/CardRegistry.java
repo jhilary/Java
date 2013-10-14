@@ -22,8 +22,7 @@ public class CardRegistry {
     }
 
 
-    private MyList travelCards = new MyArrayList();
-    private MyLinkedList passStates = new MyLinkedList();
+    private MyList metroCards = new MyArrayList();
     private Map<Card.Type, IncrementedInteger> acceptStatistics = new HashMap<Card.Type, IncrementedInteger>();
     private Map<Card.Type, IncrementedInteger> rejectStatistics = new HashMap<Card.Type, IncrementedInteger>();
 
@@ -40,7 +39,62 @@ public class CardRegistry {
 
     private final int ticketCost = 1;
 
-    private class IncrementedInteger{
+    ///// FACTORY METHODS TO CREATE CARDS
+    public Card acquireTravelCard(Card.OwnerType ownerType, Card.TripsType type){
+
+        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
+        cardInfo.setNumberOfTripsLeft(type.getNumTrips());
+        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.TRIPS, new TripCardProcessingStrategy());
+
+        metroCards.add(card);
+        return card;
+    }
+
+    public Card acquireTravelCard(
+                                    Card.OwnerType ownerType,
+                                    Card.PeriodType usageType,
+                                    DateTime startDate){
+
+        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
+        cardInfo.setValidFrom(startDate);
+        cardInfo.setValidTo(startDate.plus(usageType.getPeriod()));
+        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.PERIOD, new PeriodCardProcessingStrategy());
+        metroCards.add(card);
+        return card;
+    }
+
+    public Card acquireTravelCard(int amount){
+        if(amount < 0){
+            throw new IllegalArgumentException("Amount for adding to card must be greater then 0");
+        }
+        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
+        cardInfo.setBalance(amount);
+        Card card = new MetroCard(cardInfo, Card.OwnerType.REGULAR, Card.UsageType.ACCUMULATIVE, new AccumulativeCardProcessingStrategy());
+        metroCards.add(card);
+        return card;
+    }
+
+    public int getTicketCost() {
+
+        return ticketCost;
+    }
+
+    public void setPassState(PassState passState) {
+        boolean isPassed = passState.isPassedIn;
+        if(isPassed){
+            acceptStatistics.get(passState.usageType).increment();
+            acceptStatistics.get(passState.ownerType).increment();
+        } else {
+            rejectStatistics.get(passState.usageType).increment();
+            rejectStatistics.get(passState.ownerType).increment();
+        }
+    }
+
+    public void rechargeCardBalance(Card card, int amount) {
+        ((MetroCard)card).getCardInfo().setBalance(((MetroCard)card).getCardInfo().getBalance() + amount);
+    }
+
+    private static class IncrementedInteger{
         int value = 0;
         public void increment(){
             value++;
@@ -73,14 +127,6 @@ public class CardRegistry {
         return total;
     }
 
-    void clearStatistics(){
-        for(Card.Type key: rejectStatistics.keySet()){
-            acceptStatistics.put(key, new IncrementedInteger());
-            rejectStatistics.put(key, new IncrementedInteger());
-        }
-        passStates.clear();
-    }
-
     public int getRejectStatisticsTotal(){
         int total = 0;
         for(Card.Type key: rejectStatistics.keySet()){
@@ -89,60 +135,11 @@ public class CardRegistry {
         return total;
     }
 
-    ///// FACTORY METHODS TO CREATE CARDS
-    public Card acquireTravelCard(Card.OwnerType ownerType, Card.TripsType type){
-
-        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
-        cardInfo.setNumberOfTripsLeft(type.getNumTrips());
-        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.TRIPS, new TripCardProcessingStrategy());
-
-        travelCards.add(card);
-        return card;
-    }
-
-    public Card acquireTravelCard(
-                                    Card.OwnerType ownerType,
-                                    Card.PeriodType usageType,
-                                    DateTime startDate){
-
-        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
-        cardInfo.setValidFrom(startDate);
-        cardInfo.setValidTo(startDate.plus(usageType.getPeriod()));
-        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.PERIOD, new PeriodCardProcessingStrategy());
-        travelCards.add(card);
-        return card;
-    }
-
-    public Card acquireTravelCard(int amount){
-        if(amount < 0){
-            throw new IllegalArgumentException("Amount for adding to card must be greater then 0");
+    void clearStatistics(){
+        for(Card.Type key: rejectStatistics.keySet()){
+            acceptStatistics.put(key, new IncrementedInteger());
+            rejectStatistics.put(key, new IncrementedInteger());
         }
-        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
-        cardInfo.setBalance(amount);
-        Card card = new MetroCard(cardInfo, Card.OwnerType.REGULAR, Card.UsageType.ACCUMULATIVE, new AccumulativeCardProcessingStrategy());
-        travelCards.add(card);
-        return card;
-    }
-
-    public int getTicketCost() {
-
-        return ticketCost;
-    }
-
-    public void setPassState(PassState passState) {
-        passStates.add(passState);
-        boolean isPassed = passState.isPassedIn;
-        if(isPassed){
-            acceptStatistics.get(passState.usageType).increment();
-            acceptStatistics.get(passState.ownerType).increment();
-        } else {
-            rejectStatistics.get(passState.usageType).increment();
-            rejectStatistics.get(passState.ownerType).increment();
-        }
-    }
-
-    public void rechargeCardBalance(Card card, int amount) {
-        ((MetroCard)card).getCardInfo().setBalance(((MetroCard)card).getCardInfo().getBalance() + amount);
     }
 
 }
