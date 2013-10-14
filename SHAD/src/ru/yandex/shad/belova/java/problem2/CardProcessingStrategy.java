@@ -24,9 +24,9 @@ public interface CardProcessingStrategy {
 
 class PeriodCardProcessingStrategy implements CardProcessingStrategy {
 
-    Type type;
+    private Type type;
     private Date startDate;
-    Calendar startCalendar = new GregorianCalendar();
+    private Calendar startCalendar = new GregorianCalendar();
 
     public enum Type {
         TenDays,
@@ -41,9 +41,7 @@ class PeriodCardProcessingStrategy implements CardProcessingStrategy {
 
     @Override
     public boolean validate(int ticketCost) {
-        // todo - check whether the time has not expired
-        // the same way as in  fillCardInfoDetails()
-        return false;
+        return !hasExpired();
     }
 
     @Override
@@ -55,6 +53,16 @@ class PeriodCardProcessingStrategy implements CardProcessingStrategy {
     public void fillCardInfoDetails(CardInfo cardInfo) {
 
         cardInfo.setValidFrom(startDate);
+        cardInfo.setExpired(hasExpired());
+
+    }
+
+    @Override
+    public void updateCardInfoDetails(CardInfo cardInfo) {
+        //do nothing
+    }
+
+    boolean hasExpired() {
 
         Calendar now = new GregorianCalendar();
         now.setTime(new Date());
@@ -63,17 +71,14 @@ class PeriodCardProcessingStrategy implements CardProcessingStrategy {
 
             int startMonth = startCalendar.get(Calendar.MONTH);
             int nowMonth = now.get(Calendar.MONTH);
-            cardInfo.setExpired(startMonth < nowMonth);
+            return (startMonth < nowMonth);
         }
-        else
-        {
-            // todo - calculate difference for 10 days case
-        }
-    }
 
-    @Override
-    public void updateCardInfoDetails(CardInfo cardInfo) {
-        //do nothing
+        Calendar startPlusTen = startCalendar;
+        startPlusTen.add(Calendar.DATE, 10);
+
+        return now.after(startPlusTen);
+
     }
 }
 
