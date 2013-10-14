@@ -81,7 +81,7 @@ class TripCardProcessingStrategy implements CardProcessingStrategy {
 
     public enum Type {
         FiveTrips(5),
-        TenDays(10);
+        TenTrips(10);
 
         int numTrips;
 
