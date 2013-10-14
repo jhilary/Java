@@ -33,7 +33,7 @@ public class CardRegistry {
     ///// FACTORY METHODS TO CREATE CARDS
     public Card acquireTravelCard(Card.OwnerType ownerType, TripCardProcessingStrategy.Type type){
 
-        Card tc = new MetroTravelCard<TripCardProcessingStrategy>(
+        Card tc = new MetroCard<TripCardProcessingStrategy>(
                                             ownerType, Card.UsageType.Trips, new TripCardProcessingStrategy(type));
 
         travelCards.add(tc);
@@ -45,13 +45,13 @@ public class CardRegistry {
                                     PeriodCardProcessingStrategy.Type usageType,
                                     Date startDate){
 
-        Card tc = new MetroTravelCard(ownerType, Card.UsageType.Period, new PeriodCardProcessingStrategy(usageType, startDate));
+        Card tc = new MetroCard(ownerType, Card.UsageType.Period, new PeriodCardProcessingStrategy(usageType, startDate));
         travelCards.add(tc);
         return tc;
     }
 
     public Card acquireTravelCard(int balance){
-        Card tc = new MetroTravelCard(
+        Card tc = new MetroCard(
                                     Card.OwnerType.Regular,
                                     Card.UsageType.Accumulative,
                                     new AccumulativeCardProcessingStrategy(balance));
@@ -90,7 +90,7 @@ public class CardRegistry {
         }
     }
 
-    private class MetroTravelCard <T extends CardProcessingStrategy> implements Card {
+    private class MetroCard<T extends CardProcessingStrategy> implements Card {
 
         private final String id = UUID.randomUUID().toString();
         private OwnerType ownerType;
@@ -98,7 +98,7 @@ public class CardRegistry {
         private T validator;
 
 
-        public MetroTravelCard(OwnerType ownerType, UsageType usageType, T validator){
+        public MetroCard(OwnerType ownerType, UsageType usageType, T validator){
 
             this.ownerType = ownerType;
             this.usageType = usageType;
