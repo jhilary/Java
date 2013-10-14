@@ -3,6 +3,7 @@ package ru.yandex.shad.belova.java.problem2;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.ReadablePeriod;
+import ru.yandex.shad.belova.java.problem2.Metropolitan.AggregatedCardInfo;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,44 +13,44 @@ import org.joda.time.ReadablePeriod;
  * To change this template use File | Settings | File Templates.
  */
 
-interface Card {
+public interface Card {
 
-    enum OwnerType {
+    public enum OwnerType {
         Pupil, Student, Regular
     }
 
-    enum UsageType {
+    public enum UsageType {
         Period, Trips, Accumulative
     }
 
-    enum PeriodType {
+    public enum PeriodType {
         Month{
             @Override
-            ReadablePeriod getPeriod(){
+            public ReadablePeriod getPeriod(){
                 return Months.ONE;
             }
 
         },
         TenDays{
             @Override
-            ReadablePeriod getPeriod(){
+            public ReadablePeriod getPeriod(){
                 return Days.days(10);
             }
         };
-        abstract ReadablePeriod getPeriod();
+        public abstract ReadablePeriod getPeriod();
     }
 
     public enum TripsType {
         FiveTrips(5),
         TenTrips(10);
 
-        int numTrips;
+        private int numTrips;
 
         TripsType(int numTrips) {
             this.numTrips = numTrips;
         }
 
-        int getNumTrips() {
+        public int getNumTrips() {
             return numTrips;
         }
     }
@@ -58,8 +59,4 @@ interface Card {
     OwnerType getOwnerType();
     UsageType getUsageType();
     boolean pay();
-
-    AggregatedCardInfo getCardInfo();
-
-
 }

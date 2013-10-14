@@ -9,8 +9,7 @@ package ru.yandex.shad.belova.java.problem2;
  */
 
 import org.joda.time.DateTime;
-
-import java.util.Date;
+import ru.yandex.shad.belova.java.problem2.Metropolitan.CardRegistry;
 
 public class Main {
 
@@ -24,22 +23,12 @@ public class Main {
         Card tripCountable = CardRegistry.getInstance().acquireTravelCard(
                                                                             Card.OwnerType.Pupil,
                                                                             Card.TripsType.FiveTrips);
-
         Gateway gt = new Gateway();
         gt.passPassenger(accumulativeTC);
         gt.passPassenger(dateExpirable);
         gt.passPassenger(tripCountable);
 
-        AggregatedCardInfo cardInfo = accumulativeTC.getCardInfo();
-        System.out.println(cardInfo.getBalance());
-        cardInfo.setBalance(999);
-        cardInfo = accumulativeTC.getCardInfo();
-        System.out.println(cardInfo.getBalance());
-
         CardRegistry.getInstance().rechargeCardBalance(accumulativeTC, 5000);
-        cardInfo = accumulativeTC.getCardInfo();
-        System.out.println(cardInfo.getBalance());
-
     }
 
 }

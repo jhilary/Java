@@ -1,25 +1,20 @@
 package ru.yandex.shad.belova.java.problem2;
 
 import org.joda.time.DateTime;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import ru.yandex.shad.belova.java.problem1.MyArrayList;
-
-import java.util.Date;
+import ru.yandex.shad.belova.java.problem2.Metropolitan.CardRegistry;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(value = JUnit4.class)
-public class TestMyMetropolitan {
+public class TestCardConstruction {
 
     @Test
     public void constructPupilPeriodMonth(){
         Card pupilPeriodMonth = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Pupil,Card.PeriodType.Month,new DateTime(04052013));
+                Card.OwnerType.Pupil,Card.PeriodType.Month,new DateTime(14102013));
         assertEquals("Test owner",Card.OwnerType.Pupil, pupilPeriodMonth.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Period, pupilPeriodMonth.getUsageType());
     }
@@ -64,7 +59,6 @@ public class TestMyMetropolitan {
         assertEquals("Test usage type",Card.UsageType.Period, regularPeriod10days.getUsageType());
     }
 
-    ////////
     @Test
     public void constructPupilTrip5trips(){
         Card pupilTrip5trips = CardRegistry.getInstance().acquireTravelCard(
@@ -117,7 +111,7 @@ public class TestMyMetropolitan {
     public void constructRegularAccumulative(){
         Card regularAccumulative = CardRegistry.getInstance().acquireTravelCard(2);
         assertEquals("Test owner",Card.OwnerType.Regular, regularAccumulative.getOwnerType());
-        assertEquals("Test usage type",Card.UsageType.Accumulative, regularAccumulative.getUsageType());
+        assertEquals("Test usage type", Card.UsageType.Accumulative, regularAccumulative.getUsageType());
         regularAccumulative.pay();
     }
 

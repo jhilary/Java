@@ -1,4 +1,4 @@
-package ru.yandex.shad.belova.java.problem2;
+package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
 /**
  * Created with IntelliJ IDEA.

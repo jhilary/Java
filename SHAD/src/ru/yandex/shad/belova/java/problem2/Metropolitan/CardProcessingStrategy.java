@@ -1,10 +1,6 @@
-package ru.yandex.shad.belova.java.problem2;
+package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
 import org.joda.time.*;
-
-import java.util.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created with IntelliJ IDEA.

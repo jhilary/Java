@@ -1,5 +1,8 @@
 package ru.yandex.shad.belova.java.problem2;
 
+import ru.yandex.shad.belova.java.problem2.Metropolitan.CardPassState;
+import ru.yandex.shad.belova.java.problem2.Metropolitan.CardRegistry;
+
 import java.util.UUID;
 
 /**
@@ -13,14 +16,14 @@ public class Gateway {
 
     private final String id = UUID.randomUUID().toString();
 
-    public boolean passPassenger(Card tc) {
+    public boolean passPassenger(Card card) {
 
         boolean result = false;
 
         CardPassState tcps = new CardPassState();
         tcps.gatewayID = id;
-        tcps.travelCardID = tc.getID();
-        result = tc.pay();
+        tcps.travelCardID = card.getID();
+        result = card.pay();
         if(result){
             tcps.travelCardState = CardPassState.State.Allowed;
         } else {

@@ -1,4 +1,4 @@
-package ru.yandex.shad.belova.java.problem2;
+package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
 import org.joda.time.DateTime;
 
@@ -21,14 +21,6 @@ public class AggregatedCardInfo {
     private int numberOfTripsLeft;
     private int balance;
     private int ticketPrice;
-
-    public boolean getExpired() {
-        return expired;
-    }
-
-    public void setExpired(boolean expired) {
-        this.expired = expired;
-    }
 
     public DateTime getValidFrom() {
         return validFrom;
