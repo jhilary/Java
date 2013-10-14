@@ -10,16 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ilariyabelova
- * Date: 10/14/13
- * Time: 5:46 PM
- * To change this template use File | Settings | File Templates.
- */
 @RunWith(value = Parameterized.class)
 public class TestTripsGateway {
 

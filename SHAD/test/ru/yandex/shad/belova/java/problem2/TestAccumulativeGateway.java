@@ -11,14 +11,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ilariyabelova
- * Date: 10/14/13
- * Time: 6:13 PM
- * To change this template use File | Settings | File Templates.
- */
-
 @RunWith(value = JUnit4.class)
 public class TestAccumulativeGateway {
 

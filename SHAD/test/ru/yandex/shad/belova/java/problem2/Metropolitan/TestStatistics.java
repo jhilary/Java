@@ -12,20 +12,6 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ilariyabelova
- * Date: 10/14/13
- * Time: 11:41 PM
- * To change this template use File | Settings | File Templates.
- */
-//public class TestStatistics {
-//    //System.out.println(CardRegistry.getInstance().getStatisticsByTypes());
-//
-//
-//
-//}
-
 @RunWith(value = JUnit4.class)
 public class TestStatistics {
 
