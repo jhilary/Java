@@ -3,15 +3,6 @@ package ru.yandex.shad.belova.java.problem2;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.ReadablePeriod;
-import ru.yandex.shad.belova.java.problem2.Metropolitan.AggregatedCardInfo;
-
-/**
- * Created with IntelliJ IDEA.
- * User: olegklymchuk
- * Date: 10/12/13
- * Time: 7:27 PM
- * To change this template use File | Settings | File Templates.
- */
 
 public interface Card {
 

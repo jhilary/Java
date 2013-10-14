@@ -2,20 +2,8 @@ package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
 import org.joda.time.DateTime;
 
-import java.util.Date;
+class AggregatedCardInfo {
 
-/**
- * Created with IntelliJ IDEA.
- * User: olegklymchuk
- * Date: 10/13/13
- * Time: 1:51 AM
- * To change this template use File | Settings | File Templates.
- */
-
-
-public class AggregatedCardInfo {
-
-    private boolean expired;
     private DateTime validFrom;
     private DateTime validTo;
     private int numberOfTripsLeft;

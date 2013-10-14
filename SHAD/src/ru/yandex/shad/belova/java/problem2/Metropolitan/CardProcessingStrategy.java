@@ -1,14 +1,6 @@
 package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
-import org.joda.time.*;
-
-/**
- * Created with IntelliJ IDEA.
- * User: olegklymchuk
- * Date: 10/13/13
- * Time: 1:54 AM
- * To change this template use File | Settings | File Templates.
- */
+import org.joda.time.Interval;
 
 interface CardProcessingStrategy {
 

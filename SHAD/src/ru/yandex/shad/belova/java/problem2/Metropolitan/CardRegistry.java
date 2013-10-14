@@ -1,13 +1,5 @@
 package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
-/**
- * Created with IntelliJ IDEA.
- * User: olegklymchuk
- * Date: 10/12/13
- * Time: 10:05 PM
- * To change this template use File | Settings | File Templates.
- */
-
 import org.joda.time.DateTime;
 import ru.yandex.shad.belova.java.problem1.MyList;
 import ru.yandex.shad.belova.java.problem1.MyArrayList;
