@@ -22,12 +22,12 @@ public class Gateway {
 
         CardPassState tcps = new CardPassState();
         tcps.gatewayID = id;
-        tcps.travelCardID = card.getID();
+        tcps.cardID = card.getID();
         result = card.pay();
         if(result){
-            tcps.travelCardState = CardPassState.State.Allowed;
+            tcps.cardState = CardPassState.State.Allowed;
         } else {
-            tcps.travelCardState = CardPassState.State.Denied;
+            tcps.cardState = CardPassState.State.Denied;
         }
         CardRegistry.getInstance().setTravelCardPassState(tcps);
 

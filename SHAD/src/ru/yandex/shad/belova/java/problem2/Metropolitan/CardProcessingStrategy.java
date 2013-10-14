@@ -10,7 +10,7 @@ import org.joda.time.*;
  * To change this template use File | Settings | File Templates.
  */
 
-public interface CardProcessingStrategy {
+interface CardProcessingStrategy {
 
     boolean pay(AggregatedCardInfo cardInfo);
 }

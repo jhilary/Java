@@ -15,7 +15,7 @@ public class CardPassState {
     }
 
     public String  gatewayID;
-    public String  travelCardID;
-    public State   travelCardState;
+    public String  cardID;
+    public State   cardState;
 
 }
