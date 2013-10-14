@@ -48,9 +48,12 @@ public class CardRegistry {
         return card;
     }
 
-    public Card acquireTravelCard(int balance){
+    public Card acquireTravelCard(int amount){
+        if(amount < 0){
+            throw new IllegalArgumentException("Amount for adding to card must be greater then 0");
+        }
         AggregatedCardInfo cardInfo = new AggregatedCardInfo();
-        cardInfo.setBalance(balance);
+        cardInfo.setBalance(amount);
         Card card = new MetroCard(cardInfo, Card.OwnerType.Regular, Card.UsageType.Accumulative, new AccumulativeCardProcessingStrategy());
         travelCards.add(card);
         return card;
