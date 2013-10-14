@@ -1,5 +1,7 @@
 package ru.yandex.shad.belova.java.problem2;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 /**
@@ -11,13 +13,14 @@ import java.util.Date;
  */
 
 
-public class CardInfo {
+public class AggregatedCardInfo {
 
     private boolean expired;
-    private Date validFrom;
-    private Date validTo;
+    private DateTime validFrom;
+    private DateTime validTo;
     private int numberOfTripsLeft;
     private int balance;
+    private int ticketPrice;
 
     public boolean getExpired() {
         return expired;
@@ -27,19 +30,19 @@ public class CardInfo {
         this.expired = expired;
     }
 
-    public Date getValidFrom() {
+    public DateTime getValidFrom() {
         return validFrom;
     }
 
-    public void setValidFrom(Date validFrom) {
+    public void setValidFrom(DateTime validFrom) {
         this.validFrom = validFrom;
     }
 
-    public Date getValidTo() {
+    public DateTime getValidTo() {
         return validTo;
     }
 
-    public void setValidTo(Date validTo) {
+    public void setValidTo(DateTime validTo) {
         this.validTo = validTo;
     }
 
@@ -59,5 +62,12 @@ public class CardInfo {
         this.balance = balance;
     }
 
+    public void setTicketPrice(int ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    public int getTicketPrice() {
+        return ticketPrice;
+    }
 }
 

@@ -8,10 +8,13 @@ package ru.yandex.shad.belova.java.problem2;
  * To change this template use File | Settings | File Templates.
  */
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Months;
+import org.joda.time.ReadablePeriod;
 import ru.yandex.shad.belova.java.problem1.MyList;
 import ru.yandex.shad.belova.java.problem1.MyArrayList;
 
-import java.util.Date;
 import java.util.UUID;
 
 public class CardRegistry {
@@ -30,11 +33,13 @@ public class CardRegistry {
     private MyList passStates = new MyArrayList();
     private int ticketCost;
 
-    ///// FACTORY METHODS TO CREATE CARDS
-    public Card acquireTravelCard(Card.OwnerType ownerType, TripCardProcessingStrategy.Type type){
 
-        Card tc = new MetroCard<TripCardProcessingStrategy>(
-                                            ownerType, Card.UsageType.Trips, new TripCardProcessingStrategy(type));
+    ///// FACTORY METHODS TO CREATE CARDS
+    public Card acquireTravelCard(Card.OwnerType ownerType, Card.TripsType type){
+
+        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
+        cardInfo.setNumberOfTripsLeft(type.getNumTrips());
+        Card tc = new MetroCard(cardInfo, ownerType, Card.UsageType.Trips, new TripCardProcessingStrategy());
 
         travelCards.add(tc);
         return tc;
@@ -42,29 +47,28 @@ public class CardRegistry {
 
     public Card acquireTravelCard(
                                     Card.OwnerType ownerType,
-                                    PeriodCardProcessingStrategy.Type usageType,
-                                    Date startDate){
+                                    Card.PeriodType usageType,
+                                    DateTime startDate){
 
-        Card tc = new MetroCard(ownerType, Card.UsageType.Period, new PeriodCardProcessingStrategy(usageType, startDate));
+        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
+        cardInfo.setValidFrom(startDate);
+        cardInfo.setValidTo(startDate.plus(usageType.getPeriod()));
+        Card tc = new MetroCard(cardInfo, ownerType, Card.UsageType.Period, new PeriodCardProcessingStrategy());
         travelCards.add(tc);
         return tc;
     }
 
     public Card acquireTravelCard(int balance){
-        Card tc = new MetroCard(
-                                    Card.OwnerType.Regular,
-                                    Card.UsageType.Accumulative,
-                                    new AccumulativeCardProcessingStrategy(balance));
+        AggregatedCardInfo cardInfo = new AggregatedCardInfo();
+        cardInfo.setBalance(balance);
+        Card tc = new MetroCard(cardInfo, Card.OwnerType.Regular, Card.UsageType.Accumulative, new AccumulativeCardProcessingStrategy());
         travelCards.add(tc);
         return tc;
     }
-    ///////////
-
 
     public void setTicketCost(int cost) {
 
         this.ticketCost = cost;
-
     }
 
     public int getTicketCost() {
@@ -77,33 +81,24 @@ public class CardRegistry {
         passStates.add(passState);
     }
 
-    public void rechargeCardBalance(String cardID, int amount) {
-        // TODO - rewrite search appropriately
-        for(int i = 0; i < travelCards.size(); ++i) {
-            Card tc = (Card)travelCards.get(i);
-            if(tc.getID().equals(cardID)){
-                CardInfo cardInfo = new CardInfo();
-                cardInfo.setBalance(amount);
-                tc.updateCardInfo(cardInfo);
-                break;
-            }
-        }
+    public void rechargeCardBalance(Card card, int amount) {
+        card.getCardInfo().setBalance(card.getCardInfo().getBalance() + amount);
     }
 
-    private class MetroCard<T extends CardProcessingStrategy> implements Card {
+    private class MetroCard implements Card {
 
         private final String id = UUID.randomUUID().toString();
         private OwnerType ownerType;
         private UsageType usageType;
-        private T validator;
+        private AggregatedCardInfo cardInfo;
+        private CardProcessingStrategy validator;
 
 
-        public MetroCard(OwnerType ownerType, UsageType usageType, T validator){
-
+        public MetroCard(AggregatedCardInfo cardInfo, OwnerType ownerType, UsageType usageType, CardProcessingStrategy validator){
             this.ownerType = ownerType;
             this.usageType = usageType;
             this.validator = validator;
-
+            this.cardInfo = cardInfo;
         }
 
 
@@ -126,30 +121,14 @@ public class CardRegistry {
         }
 
         @Override
-        public CardInfo getCardInfo() {
-
-            CardInfo cardInfo = new CardInfo();
-            validator.fillCardInfoDetails(cardInfo);
-
+        public AggregatedCardInfo getCardInfo() {
             return cardInfo;
         }
 
         @Override
-        public void updateCardInfo(CardInfo cardInfo) {
-
-            validator.updateCardInfoDetails(cardInfo);
-        }
-
-        @Override
-        public boolean validate(int ticketCost) {
-
-            return validator.validate(ticketCost);
-        }
-
-        @Override
-        public void pay(int ticketCost) {
-
-            validator.pay(ticketCost);
+        public boolean pay() {
+            cardInfo.setTicketPrice(getTicketCost());
+            return validator.pay(cardInfo);
         }
     }
 

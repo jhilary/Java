@@ -20,23 +20,12 @@ public class Gateway {
         CardPassState tcps = new CardPassState();
         tcps.gatewayID = id;
         tcps.travelCardID = tc.getID();
-        int ticketCost = CardRegistry.getInstance().getTicketCost();
-        if(!tc.validate(ticketCost)) {
-
+        result = tc.pay();
+        if(result){
+            tcps.travelCardState = CardPassState.State.Allowed;
+        } else {
             tcps.travelCardState = CardPassState.State.Denied;
-            result = false;
         }
-        else {
-            try {
-                tc.pay(ticketCost);
-            }
-            catch(Exception ex)
-            {
-                //todo - define proper exception and exception handler
-                result = false;
-            }
-        }
-
         CardRegistry.getInstance().setTravelCardPassState(tcps);
 
         return result;

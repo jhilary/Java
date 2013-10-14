@@ -1,5 +1,6 @@
 package ru.yandex.shad.belova.java.problem2;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructPupilPeriodMonth(){
         Card pupilPeriodMonth = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Pupil,PeriodCardProcessingStrategy.Type.Month,new Date(04052013));
+                Card.OwnerType.Pupil,Card.PeriodType.Month,new DateTime(04052013));
         assertEquals("Test owner",Card.OwnerType.Pupil, pupilPeriodMonth.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Period, pupilPeriodMonth.getUsageType());
     }
@@ -26,7 +27,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructPupilPeriod10days(){
         Card pupilPeriod10days = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Pupil,PeriodCardProcessingStrategy.Type.TenDays,new Date(04052013));
+                Card.OwnerType.Pupil,Card.PeriodType.TenDays,new DateTime(04052013));
         assertEquals("Test owner",Card.OwnerType.Pupil, pupilPeriod10days.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Period, pupilPeriod10days.getUsageType());
     }
@@ -34,7 +35,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructStudentPeriodMonth(){
         Card studentPeriodMonth = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Student,PeriodCardProcessingStrategy.Type.Month,new Date(04052013));
+                Card.OwnerType.Student,Card.PeriodType.Month,new DateTime(04052013));
         assertEquals("Test owner",Card.OwnerType.Student, studentPeriodMonth.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Period, studentPeriodMonth.getUsageType());
     }
@@ -42,7 +43,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructStudentPeriod10days(){
         Card studentPeriod10days = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Student,PeriodCardProcessingStrategy.Type.TenDays,new Date(04052013));
+                Card.OwnerType.Student,Card.PeriodType.TenDays,new DateTime(04052013));
         assertEquals("Test owner",Card.OwnerType.Student, studentPeriod10days.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Period, studentPeriod10days.getUsageType());
     }
@@ -50,7 +51,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructRegularPeriodMonth(){
         Card regularPeriodMonth = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Regular,PeriodCardProcessingStrategy.Type.Month,new Date(04052013));
+                Card.OwnerType.Regular,Card.PeriodType.Month,new DateTime(04052013));
         assertEquals("Test owner",Card.OwnerType.Regular, regularPeriodMonth.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Period, regularPeriodMonth.getUsageType());
     }
@@ -58,7 +59,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructRegularPeriod10days(){
         Card regularPeriod10days = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Regular,PeriodCardProcessingStrategy.Type.TenDays,new Date(04052013));
+                Card.OwnerType.Regular,Card.PeriodType.TenDays,new DateTime(04052013));
         assertEquals("Test owner",Card.OwnerType.Regular, regularPeriod10days.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Period, regularPeriod10days.getUsageType());
     }
@@ -67,7 +68,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructPupilTrip5trips(){
         Card pupilTrip5trips = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Pupil,TripCardProcessingStrategy.Type.FiveTrips);
+                Card.OwnerType.Pupil,Card.TripsType.FiveTrips);
         assertEquals("Test owner",Card.OwnerType.Pupil, pupilTrip5trips.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Trips, pupilTrip5trips.getUsageType());
     }
@@ -75,7 +76,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructPupilTrip10trips(){
         Card pupilTrip10trips = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Pupil,TripCardProcessingStrategy.Type.TenTrips);
+                Card.OwnerType.Pupil,Card.TripsType.TenTrips);
         assertEquals("Test owner",Card.OwnerType.Pupil, pupilTrip10trips.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Trips, pupilTrip10trips.getUsageType());
     }
@@ -83,7 +84,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructStudentTrip5trips(){
         Card studentTrip5trips = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Student,TripCardProcessingStrategy.Type.FiveTrips);
+                Card.OwnerType.Student,Card.TripsType.FiveTrips);
         assertEquals("Test owner",Card.OwnerType.Student, studentTrip5trips.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Trips, studentTrip5trips.getUsageType());
     }
@@ -91,7 +92,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructStudentTrip10trips(){
         Card studentTrip10trips = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Student,TripCardProcessingStrategy.Type.TenTrips);
+                Card.OwnerType.Student,Card.TripsType.TenTrips);
         assertEquals("Test owner",Card.OwnerType.Student, studentTrip10trips.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Trips, studentTrip10trips.getUsageType());
     }
@@ -99,7 +100,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructRegularTrip5trips(){
         Card regularTrip5trips = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Regular,TripCardProcessingStrategy.Type.FiveTrips);
+                Card.OwnerType.Regular,Card.TripsType.FiveTrips);
         assertEquals("Test owner",Card.OwnerType.Regular, regularTrip5trips.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Trips, regularTrip5trips.getUsageType());
     }
@@ -107,7 +108,7 @@ public class TestMyMetropolitan {
     @Test
     public void constructRegularTrip10trips(){
         Card regularTrip10trips = CardRegistry.getInstance().acquireTravelCard(
-                Card.OwnerType.Regular,TripCardProcessingStrategy.Type.TenTrips);
+                Card.OwnerType.Regular,Card.TripsType.TenTrips);
         assertEquals("Test owner",Card.OwnerType.Regular, regularTrip10trips.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Trips, regularTrip10trips.getUsageType());
     }
@@ -117,8 +118,7 @@ public class TestMyMetropolitan {
         Card regularAccumulative = CardRegistry.getInstance().acquireTravelCard(2);
         assertEquals("Test owner",Card.OwnerType.Regular, regularAccumulative.getOwnerType());
         assertEquals("Test usage type",Card.UsageType.Accumulative, regularAccumulative.getUsageType());
-        regularAccumulative.validate(1);
-        regularAccumulative.pay(1);
+        regularAccumulative.pay();
     }
 
 }

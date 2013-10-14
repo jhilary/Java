@@ -8,6 +8,8 @@ package ru.yandex.shad.belova.java.problem2;
  * To change this template use File | Settings | File Templates.
  */
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 public class Main {
@@ -17,25 +19,24 @@ public class Main {
         Card accumulativeTC  = CardRegistry.getInstance().acquireTravelCard(100);
         Card dateExpirable = CardRegistry.getInstance().acquireTravelCard(
                                                                             Card.OwnerType.Student,
-                                                                            PeriodCardProcessingStrategy.Type.TenDays,
-                                                                            new Date());
+                                                                            Card.PeriodType.TenDays,
+                                                                            new DateTime("14102013"));
         Card tripCountable = CardRegistry.getInstance().acquireTravelCard(
                                                                             Card.OwnerType.Pupil,
-                                                                            TripCardProcessingStrategy.Type.FiveTrips);
+                                                                            Card.TripsType.FiveTrips);
 
         Gateway gt = new Gateway();
         gt.passPassenger(accumulativeTC);
         gt.passPassenger(dateExpirable);
         gt.passPassenger(tripCountable);
 
-        CardInfo cardInfo = accumulativeTC.getCardInfo();
+        AggregatedCardInfo cardInfo = accumulativeTC.getCardInfo();
         System.out.println(cardInfo.getBalance());
         cardInfo.setBalance(999);
-        accumulativeTC.updateCardInfo(cardInfo);
         cardInfo = accumulativeTC.getCardInfo();
         System.out.println(cardInfo.getBalance());
 
-        CardRegistry.getInstance().rechargeCardBalance(accumulativeTC.getID(), 5000);
+        CardRegistry.getInstance().rechargeCardBalance(accumulativeTC, 5000);
         cardInfo = accumulativeTC.getCardInfo();
         System.out.println(cardInfo.getBalance());
 

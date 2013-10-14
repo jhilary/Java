@@ -1,5 +1,9 @@
 package ru.yandex.shad.belova.java.problem2;
 
+import org.joda.time.Days;
+import org.joda.time.Months;
+import org.joda.time.ReadablePeriod;
+
 /**
  * Created with IntelliJ IDEA.
  * User: olegklymchuk
@@ -7,7 +11,6 @@ package ru.yandex.shad.belova.java.problem2;
  * Time: 7:27 PM
  * To change this template use File | Settings | File Templates.
  */
-
 
 interface Card {
 
@@ -19,14 +22,44 @@ interface Card {
         Period, Trips, Accumulative
     }
 
+    enum PeriodType {
+        Month{
+            @Override
+            ReadablePeriod getPeriod(){
+                return Months.ONE;
+            }
+
+        },
+        TenDays{
+            @Override
+            ReadablePeriod getPeriod(){
+                return Days.days(10);
+            }
+        };
+        abstract ReadablePeriod getPeriod();
+    }
+
+    public enum TripsType {
+        FiveTrips(5),
+        TenTrips(10);
+
+        int numTrips;
+
+        TripsType(int numTrips) {
+            this.numTrips = numTrips;
+        }
+
+        int getNumTrips() {
+            return numTrips;
+        }
+    }
+
     String getID();
     OwnerType getOwnerType();
     UsageType getUsageType();
+    boolean pay();
 
-    CardInfo getCardInfo();
-    void updateCardInfo(CardInfo cardInfo);
+    AggregatedCardInfo getCardInfo();
 
-    boolean validate(int amount);
-    void pay(int amount);
 
 }
