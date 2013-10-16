@@ -14,30 +14,24 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Card accumulativeTC  = CardRegistry.getInstance().acquireTravelCard(100);
-        Card dateExpirable = CardRegistry.getInstance().acquireTravelCard(
-                                                                            Card.OwnerType.Student,
-                                                                            PeriodCardProcessingStrategy.Type.TenDays,
-                                                                            new Date());
-        Card tripCountable = CardRegistry.getInstance().acquireTravelCard(
-                                                                            Card.OwnerType.Pupil,
-                                                                            TripCardProcessingStrategy.Type.FiveTrips);
+        Card accumulative  = CardRegistry.getInstance().acquireCard(Card.OwnerType.Regular, new Date(), new Balance(Balance.Type.Money, 100));
+        Card dateExpirable = CardRegistry.getInstance().acquireCard(Card.OwnerType.Student, new Date(), new Balance(Balance.Type.Days, 10));
+        Card tripCountable = CardRegistry.getInstance().acquireCard(Card.OwnerType.Pupil, new Date(), new Balance(Balance.Type.Days, 5));
 
         Gateway gt = new Gateway();
-        gt.passPassenger(accumulativeTC);
+        gt.passPassenger(accumulative);
         gt.passPassenger(dateExpirable);
         gt.passPassenger(tripCountable);
 
-        CardInfo cardInfo = accumulativeTC.getCardInfo();
-        System.out.println(cardInfo.getBalance());
-        cardInfo.setBalance(999);
-        accumulativeTC.updateCardInfo(cardInfo);
-        cardInfo = accumulativeTC.getCardInfo();
-        System.out.println(cardInfo.getBalance());
+        Balance balance = accumulative.getBalance();
+        System.out.println(balance.value);
+        accumulative.updateBalance(new Balance(Balance.Type.Money, 999));
+        balance = accumulative.getBalance();
+        System.out.println(balance.value);
 
-        CardRegistry.getInstance().rechargeCardBalance(accumulativeTC.getID(), 5000);
-        cardInfo = accumulativeTC.getCardInfo();
-        System.out.println(cardInfo.getBalance());
+        CardRegistry.getInstance().rechargeCardBalance(accumulative.getID(), new Balance(Balance.Type.Money, 5000));
+        balance = accumulative.getBalance();
+        System.out.println(balance.value);
 
     }
 

@@ -13,22 +13,22 @@ public class Gateway {
 
     private final String id = UUID.randomUUID().toString();
 
-    public boolean passPassenger(Card tc) {
+    public boolean passPassenger(Card card) {
 
         boolean result = false;
 
         CardPassState tcps = new CardPassState();
         tcps.gatewayID = id;
-        tcps.travelCardID = tc.getID();
+        tcps.travelCardID = card.getID();
         int ticketCost = CardRegistry.getInstance().getTicketCost();
-        if(!tc.validate(ticketCost)) {
+        if(!CardRegistry.getInstance().isCardRegistered(card.getID()) || !card.validate(ticketCost)) {
 
             tcps.travelCardState = CardPassState.State.Denied;
             result = false;
         }
         else {
             try {
-                tc.pay(ticketCost);
+                card.pay(ticketCost);
             }
             catch(Exception ex)
             {

@@ -12,31 +12,37 @@ import java.util.GregorianCalendar;
  * To change this template use File | Settings | File Templates.
  */
 
-public interface CardProcessingStrategy {
+public abstract class CardProcessingStrategy {
 
-    boolean validate(int ticketCost);
-    void pay(int ticketCost);
+    protected Date activationDate;
+    protected Balance balance;
 
-    void fillCardInfoDetails(CardInfo cardInfo);
-    void updateCardInfoDetails(CardInfo cardInfo);
+    public CardProcessingStrategy(Date activationDate, Balance balance) {
+        this.activationDate = activationDate;
+        this.balance = balance;
+    }
+
+    public abstract boolean validate(int ticketCost);
+    public abstract void pay(int ticketCost);
+
+    public Balance getBalance() {
+        return this.balance;
+    }
+
+    public void updateBalance(Balance balance) {
+        this.balance = balance;
+    }
 
 }
 
-class PeriodCardProcessingStrategy implements CardProcessingStrategy {
+class PeriodCardProcessingStrategy extends CardProcessingStrategy {
 
-    private Type type;
-    private Date startDate;
     private Calendar startCalendar = new GregorianCalendar();
 
-    public enum Type {
-        TenDays,
-        Month
-    }
+    public PeriodCardProcessingStrategy(Date activationDate, Balance balance) {
 
-    public PeriodCardProcessingStrategy(Type type, Date startDate) {
-        this.type = type;
-        this.startDate = startDate;
-        startCalendar.setTime(this.startDate);
+        super(activationDate, balance);
+        startCalendar.setTime(activationDate);
     }
 
     @Override
@@ -49,112 +55,69 @@ class PeriodCardProcessingStrategy implements CardProcessingStrategy {
         // do nothing
     }
 
-    @Override
-    public void fillCardInfoDetails(CardInfo cardInfo) {
-
-        cardInfo.setValidFrom(startDate);
-        cardInfo.setExpired(hasExpired());
-
-    }
-
-    @Override
-    public void updateCardInfoDetails(CardInfo cardInfo) {
-        //do nothing
-    }
-
     boolean hasExpired() {
 
         Calendar now = new GregorianCalendar();
         now.setTime(new Date());
 
-        if(type == Type.Month) {
-
-            int startMonth = startCalendar.get(Calendar.MONTH);
-            int nowMonth = now.get(Calendar.MONTH);
-            return (startMonth < nowMonth);
-        }
-
-        Calendar startPlusTen = startCalendar;
-        startPlusTen.add(Calendar.DATE, 10);
-
-        return now.after(startPlusTen);
+        //todo - just verify that startDate.days <= 'new Date()' (i.e. 'now') <= startDate.days + balance.value;
+        return false;
+//        if(type == Type.Month) {
+//
+//            int startMonth = startCalendar.get(Calendar.MONTH);
+//            int nowMonth = now.get(Calendar.MONTH);
+//            return (startMonth < nowMonth);
+//        }
+//
+//        Calendar startPlusTen = startCalendar;
+//        startPlusTen.add(Calendar.DATE, 10);
+//
+//        return now.after(startPlusTen);
 
     }
 }
 
-class TripCardProcessingStrategy implements CardProcessingStrategy {
+class TripCardProcessingStrategy extends CardProcessingStrategy {
 
-    public enum Type {
-        FiveTrips(5),
-        TenTrips(10);
+    public TripCardProcessingStrategy(Date activationDate, Balance balance) {
 
-        int numTrips;
-
-        Type(int numTrips) {
-            this.numTrips = numTrips;
-        }
-
-        int getNumTrips() {
-            return numTrips;
-        }
-    }
-
-    private final Type type;
-    private int numTrips;
-
-    public TripCardProcessingStrategy(Type type) {
-
-        this.type = type;
-        numTrips = type.getNumTrips();
-
+        super(activationDate, balance);
     }
 
     @Override
     public boolean validate(int ticketCost) {
-        return numTrips > 0;
+        return balance.value > 0;
     }
 
     @Override
     public void pay(int ticketCost) {
-        --numTrips;
+        --balance.value;
     }
 
-    @Override
-    public void fillCardInfoDetails(CardInfo cardInfo) {
-        cardInfo.setNumberOfTripsLeft(numTrips);
-    }
-
-    @Override
-    public void updateCardInfoDetails(CardInfo cardInfo) {
-        //do nothing
-    }
 }
 
-class AccumulativeCardProcessingStrategy implements CardProcessingStrategy {
+class AccumulativeCardProcessingStrategy extends CardProcessingStrategy {
 
-    private int balance;
+    public AccumulativeCardProcessingStrategy(Date activationDate, Balance balance) {
 
-    public AccumulativeCardProcessingStrategy(int balance) {
-        this.balance = balance;
+        super(activationDate, balance);
     }
 
     @Override
     public boolean validate(int ticketCost) {
-        return (balance - ticketCost) >= 0;
+
+        return (balance.value - ticketCost) >= 0;
     }
 
     @Override
     public void pay(int ticketCost) {
-        balance -= ticketCost;
+
+        balance.value -= ticketCost;
     }
 
     @Override
-    public void fillCardInfoDetails(CardInfo cardInfo) {
-        cardInfo.setBalance(balance);
-    }
+    public void updateBalance(Balance balance) {
 
-    @Override
-    public void updateCardInfoDetails(CardInfo cardInfo) {
-        this.balance += cardInfo.getBalance();
+        this.balance.value += balance.value;
     }
 }

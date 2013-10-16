@@ -11,7 +11,9 @@ package ru.yandex.shad.belova.java.problem2;
 import ru.yandex.shad.belova.java.problem1.MyList;
 import ru.yandex.shad.belova.java.problem1.MyArrayList;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 
 public class CardRegistry {
@@ -30,36 +32,28 @@ public class CardRegistry {
     private MyList passStates = new MyArrayList();
     private int ticketCost;
 
-    ///// FACTORY METHODS TO CREATE CARDS
-    public Card acquireTravelCard(Card.OwnerType ownerType, TripCardProcessingStrategy.Type type){
+    public Card acquireCard(Card.OwnerType ownerType, Date startDate, Balance balance){
 
-        Card tc = new MetroTravelCard<TripCardProcessingStrategy>(
-                                            ownerType, Card.UsageType.Trips, new TripCardProcessingStrategy(type));
+        Card card = null;
 
-        travelCards.add(tc);
-        return tc;
+        switch (balance.type)
+        {
+            case Trips:
+                card = new MetroTravelCard<TripCardProcessingStrategy>(ownerType, new TripCardProcessingStrategy(startDate, balance));
+                break;
+            case Money:
+                card = new MetroTravelCard(Card.OwnerType.Regular, new AccumulativeCardProcessingStrategy(startDate, balance));
+                break;
+            case Month:
+            case Days:
+                card = new MetroTravelCard(ownerType, new PeriodCardProcessingStrategy(startDate, balance));
+                break;
+        }
+
+        travelCards.add(card);
+
+        return card;
     }
-
-    public Card acquireTravelCard(
-                                    Card.OwnerType ownerType,
-                                    PeriodCardProcessingStrategy.Type usageType,
-                                    Date startDate){
-
-        Card tc = new MetroTravelCard(ownerType, Card.UsageType.Period, new PeriodCardProcessingStrategy(usageType, startDate));
-        travelCards.add(tc);
-        return tc;
-    }
-
-    public Card acquireTravelCard(int balance){
-        Card tc = new MetroTravelCard(
-                                    Card.OwnerType.Regular,
-                                    Card.UsageType.Accumulative,
-                                    new AccumulativeCardProcessingStrategy(balance));
-        travelCards.add(tc);
-        return tc;
-    }
-    ///////////
-
 
     public void setTicketCost(int cost) {
 
@@ -77,35 +71,43 @@ public class CardRegistry {
         passStates.add(passState);
     }
 
-    public void rechargeCardBalance(String cardID, int amount) {
+    public void rechargeCardBalance(String cardID, Balance balance) {
+
+        Card card = findCardByID(cardID);
+        if(card != null)
+            card.updateBalance(balance);
+        else
+            throw new SecurityException("Card with id '" + cardID + "' not found in the registry.");
+    }
+
+    public Card findCardByID(String cardID) {
         // TODO - rewrite search appropriately
         for(int i = 0; i < travelCards.size(); ++i) {
-            Card tc = (Card)travelCards.get(i);
-            if(tc.getID().equals(cardID)){
-                CardInfo cardInfo = new CardInfo();
-                cardInfo.setBalance(amount);
-                tc.updateCardInfo(cardInfo);
-                break;
-            }
+            Card card = (Card)travelCards.get(i);
+            if(card.getID().equals(cardID))
+                return card;
         }
+
+        return null;
+    }
+
+    public boolean isCardRegistered(String cardID) {
+
+        return findCardByID(cardID) != null;
     }
 
     private class MetroTravelCard <T extends CardProcessingStrategy> implements Card {
 
         private final String id = UUID.randomUUID().toString();
         private OwnerType ownerType;
-        private UsageType usageType;
         private T validator;
 
-
-        public MetroTravelCard(OwnerType ownerType, UsageType usageType, T validator){
+        public MetroTravelCard(OwnerType ownerType, T validator){
 
             this.ownerType = ownerType;
-            this.usageType = usageType;
             this.validator = validator;
 
         }
-
 
         @Override
         public String getID() {
@@ -120,24 +122,17 @@ public class CardRegistry {
         }
 
         @Override
-        public UsageType getUsageType() {
+        public Balance getBalance() {
 
-            return usageType;
+            return validator.getBalance();
+
         }
 
         @Override
-        public CardInfo getCardInfo() {
+        public void updateBalance(Balance balance) {
 
-            CardInfo cardInfo = new CardInfo();
-            validator.fillCardInfoDetails(cardInfo);
+            validator.updateBalance(balance);
 
-            return cardInfo;
-        }
-
-        @Override
-        public void updateCardInfo(CardInfo cardInfo) {
-
-            validator.updateCardInfoDetails(cardInfo);
         }
 
         @Override

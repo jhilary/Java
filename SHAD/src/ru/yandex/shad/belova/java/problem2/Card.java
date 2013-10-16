@@ -15,16 +15,11 @@ interface Card {
         Pupil, Student, Regular
     }
 
-    enum UsageType {
-        Period, Trips, Accumulative
-    }
-
     String getID();
     OwnerType getOwnerType();
-    UsageType getUsageType();
 
-    CardInfo getCardInfo();
-    void updateCardInfo(CardInfo cardInfo);
+    Balance getBalance();
+    void updateBalance(Balance balance);
 
     boolean validate(int amount);
     void pay(int amount);
