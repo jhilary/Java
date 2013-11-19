@@ -9,6 +9,12 @@ public class Gateway {
 
     private final String id = UUID.randomUUID().toString();
 
+    private CardRegistry cardRegistry;
+
+    public Gateway(CardRegistry cardRegistry) {
+        this.cardRegistry = cardRegistry;
+    }
+
     public boolean passPassenger(Card card) {
 
         boolean isPaid = card.pay();
@@ -19,7 +25,7 @@ public class Gateway {
         passState.usageType = card.getUsageType();
         passState.isPassedIn = isPaid;
 
-        CardRegistry.getInstance().setStatistics(passState);
+        this.cardRegistry.setStatistics(passState);
 
         return isPaid;
     }

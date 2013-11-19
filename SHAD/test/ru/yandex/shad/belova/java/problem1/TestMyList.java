@@ -18,18 +18,18 @@ import org.junit.runner.RunWith;
 
 @RunWith(value = Parameterized.class)
 public class TestMyList {
-    private MyListFactory.TYPE type;
+    private MyListFactory type;
     private MyList list;
     
     @Parameters(name="{0}")
     public static List<Object[]> classes(){
         LinkedList<Object[]> classes = new LinkedList<Object[]>();
-        classes.add(new Object[]{MyListFactory.TYPE.ARRAY});
-        classes.add(new Object[]{MyListFactory.TYPE.LINKED_LIST});
+        classes.add(new Object[]{MyListFactory.ARRAY});
+        classes.add(new Object[]{MyListFactory.LINKED_LIST});
         return classes;
     }
     
-    public TestMyList(MyListFactory.TYPE type) {
+    public TestMyList(MyListFactory type) {
         this.type = type;
     }
     
@@ -38,7 +38,7 @@ public class TestMyList {
     
     @Before
     public void setUp(){
-        list = MyListFactory.createList(this.type);
+        list = type.create();
     }
     
     @Test

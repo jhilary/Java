@@ -3,6 +3,7 @@ package ru.yandex.shad.belova.java.problem1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
@@ -102,5 +103,47 @@ public class TestMyLinkedList {
     public void testRemoveLastException(){
         exception.expect(NoSuchElementException.class);
         list.removeLast();
+    }
+
+    @Test
+    public void testNextIndexUnsupportedException(){
+        exception.expect(UnsupportedOperationException.class);
+        ListIterator<Object> listIterator = list.iterator();
+        listIterator.nextIndex();
+    }
+
+    @Test
+    public void testPreviousIndexUnsupportedException(){
+        exception.expect(UnsupportedOperationException.class);
+        ListIterator<Object> listIterator = list.iterator();
+        listIterator.previousIndex();
+    }
+
+    @Test
+    public void testRemoveUnsupportedException(){
+        exception.expect(UnsupportedOperationException.class);
+        ListIterator<Object> listIterator = list.iterator();
+        listIterator.remove();
+    }
+
+    @Test
+    public void testAddUnsupportedException(){
+        exception.expect(UnsupportedOperationException.class);
+        ListIterator<Object> listIterator = list.iterator();
+        listIterator.add(new Object[]{});
+    }
+
+    @Test
+    public void testNextExceptionIfNoElementsInList(){
+        exception.expect(NoSuchElementException.class);
+        ListIterator<Object> listIterator = list.iterator();
+        listIterator.next();
+    }
+
+    @Test
+    public void testPreviousExceptionIfNoElementsInList(){
+        exception.expect(NoSuchElementException.class);
+        ListIterator<Object> listIterator = list.iterator();
+        listIterator.previous();
     }
 }

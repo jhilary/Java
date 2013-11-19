@@ -3,6 +3,7 @@ package ru.yandex.shad.belova.java.problem1;
 import java.util.ListIterator;
 
 public class MyCollection {
+
     private MyCollection(){};
 
     private static void swap(MyList a, int i, int j){
@@ -11,11 +12,11 @@ public class MyCollection {
         a.set(j, temp);
     }
 
-    private interface IPivotStrategy {
+    interface IPivotStrategy {
         int getPivotIndex(MyArrayList a, int start, int end);
     }
 
-    private static IPivotStrategy medianPivot = new IPivotStrategy() {
+    static IPivotStrategy medianPivot = new IPivotStrategy() {
         public int getPivotIndex(MyArrayList a, int start, int end) {
             int first = (Integer)a.get(start);
             int second = (Integer)a.get((start+end)/2);
@@ -35,14 +36,15 @@ public class MyCollection {
                         return thirdInd;
                     }
                 }
-            } else if(third >= first){
-                return firstInd;
-            }
-            else {
-                if (third <= second){
-                    return secondInd;
+            } else {
+                if(third >= first){
+                    return firstInd;
                 } else {
-                    return thirdInd;
+                    if (third <= second){
+                        return secondInd;
+                    } else {
+                        return thirdInd;
+                    }
                 }
             }
         }

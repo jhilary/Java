@@ -21,7 +21,6 @@ class MetroCard implements Card {
 
     @Override
     public String getID() {
-
         return id;
     }
 
@@ -33,7 +32,6 @@ class MetroCard implements Card {
 
     @Override
     public UsageType getUsageType() {
-
         return usageType;
     }
 

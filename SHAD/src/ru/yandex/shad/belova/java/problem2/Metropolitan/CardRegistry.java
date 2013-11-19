@@ -12,7 +12,7 @@ import java.util.Map;
 public class CardRegistry {
 
     private static class SingletonHolder {
-        public static final CardRegistry instance = new CardRegistry();
+        private static final CardRegistry instance = new CardRegistry();
     }
 
     public static CardRegistry getInstance() {
