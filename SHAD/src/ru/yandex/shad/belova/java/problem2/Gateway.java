@@ -1,6 +1,5 @@
 package ru.yandex.shad.belova.java.problem2;
 
-import ru.yandex.shad.belova.java.problem2.Metropolitan.PassState;
 import ru.yandex.shad.belova.java.problem2.Metropolitan.CardRegistry;
 
 import java.util.UUID;
@@ -16,6 +15,10 @@ public class Gateway {
     }
 
     public boolean passPassenger(Card card) {
+
+        if(card == null){
+            throw new IllegalArgumentException();
+        }
 
         boolean isPaid = card.pay();
 

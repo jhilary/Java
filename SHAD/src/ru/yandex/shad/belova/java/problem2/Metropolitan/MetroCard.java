@@ -11,12 +11,14 @@ class MetroCard implements Card {
     private UsageType usageType;
     private AggregatedCardInfo cardInfo;
     private CardProcessingStrategy validator;
+    private CardRegistry cardRegistry;
 
-    public MetroCard(AggregatedCardInfo cardInfo, OwnerType ownerType, UsageType usageType, CardProcessingStrategy validator){
+    MetroCard(AggregatedCardInfo cardInfo, OwnerType ownerType, UsageType usageType, CardProcessingStrategy validator, CardRegistry cardRegistry){
         this.ownerType = ownerType;
         this.usageType = usageType;
         this.validator = validator;
         this.cardInfo = cardInfo;
+        this.cardRegistry = cardRegistry;
     }
 
     @Override
@@ -37,11 +39,11 @@ class MetroCard implements Card {
 
     @Override
     public boolean pay() {
-        cardInfo.setTicketPrice(CardRegistry.getInstance().getTicketCost());
+        cardInfo.setTicketPrice(cardRegistry.getTicketCost());
         return validator.pay(cardInfo);
     }
 
-    public AggregatedCardInfo getCardInfo() {
+    AggregatedCardInfo getCardInfo() {
         return cardInfo;
     }
 }

@@ -1,15 +1,18 @@
 package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
 import org.joda.time.DateTime;
-import ru.yandex.shad.belova.java.problem1.MyLinkedList;
 import ru.yandex.shad.belova.java.problem1.MyList;
 import ru.yandex.shad.belova.java.problem1.MyArrayList;
 import ru.yandex.shad.belova.java.problem2.Card;
+import ru.yandex.shad.belova.java.problem2.PassState;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class CardRegistry {
+
+    private CardRegistry(){}
 
     private static class SingletonHolder {
         private static final CardRegistry instance = new CardRegistry();
@@ -42,7 +45,7 @@ public class CardRegistry {
 
         AggregatedCardInfo cardInfo = new AggregatedCardInfo();
         cardInfo.setNumberOfTripsLeft(type.getNumTrips());
-        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.TRIPS, new TripCardProcessingStrategy());
+        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.TRIPS, new TripCardProcessingStrategy(),this);
 
         metroCards.add(card);
         return card;
@@ -50,13 +53,13 @@ public class CardRegistry {
 
     public Card acquireTravelCard(
                                     Card.OwnerType ownerType,
-                                    Card.PeriodType usageType,
+                                    Card.PeriodType periodType,
                                     DateTime startDate){
 
         AggregatedCardInfo cardInfo = new AggregatedCardInfo();
         cardInfo.setValidFrom(startDate);
-        cardInfo.setValidTo(startDate.plus(usageType.getPeriod()));
-        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.PERIOD, new PeriodCardProcessingStrategy());
+        cardInfo.setValidTo(startDate.plus(periodType.getPeriod()));
+        Card card = new MetroCard(cardInfo, ownerType, Card.UsageType.PERIOD, new PeriodCardProcessingStrategy(),this);
         metroCards.add(card);
         return card;
     }
@@ -67,7 +70,7 @@ public class CardRegistry {
         }
         AggregatedCardInfo cardInfo = new AggregatedCardInfo();
         cardInfo.setBalance(amount);
-        Card card = new MetroCard(cardInfo, Card.OwnerType.REGULAR, Card.UsageType.ACCUMULATIVE, new AccumulativeCardProcessingStrategy());
+        Card card = new MetroCard(cardInfo, Card.OwnerType.REGULAR, Card.UsageType.ACCUMULATIVE, new AccumulativeCardProcessingStrategy(),this);
         metroCards.add(card);
         return card;
     }
@@ -139,5 +142,4 @@ public class CardRegistry {
             rejectStatistics.put(key, new IncrementedInteger());
         }
     }
-
 }

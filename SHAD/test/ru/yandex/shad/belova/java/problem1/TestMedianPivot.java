@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ilariyabelova
@@ -64,6 +66,6 @@ public class TestMedianPivot {
     @Test
     public void testMedianPivot(){
         int pivot = MyCollection.medianPivot.getPivotIndex(this.list, this.start, this.end);
-
+        assertEquals(this.pivotIndex, pivot);
     }
 }

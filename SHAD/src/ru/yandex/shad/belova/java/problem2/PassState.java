@@ -1,4 +1,4 @@
-package ru.yandex.shad.belova.java.problem2.Metropolitan;
+package ru.yandex.shad.belova.java.problem2;
 
 import ru.yandex.shad.belova.java.problem2.Card;
 
