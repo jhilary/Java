@@ -1,8 +1,6 @@
 package ru.yandex.shad.belova.java.problem2.Metropolitan;
 
 import org.joda.time.DateTime;
-import org.joda.time.Months;
-import org.joda.time.ReadablePeriod;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(value = Parameterized.class)
-public class TestPeriodGateway {
+public class TestPeriodMetroCard {
 
     private Card.OwnerType ownerType;
     CardRegistry cardRegistry;
@@ -42,7 +39,7 @@ public class TestPeriodGateway {
         return classes;
     }
 
-    public TestPeriodGateway(Card.OwnerType ownerType) {
+    public TestPeriodMetroCard(Card.OwnerType ownerType) {
         this.ownerType = ownerType;
     }
 

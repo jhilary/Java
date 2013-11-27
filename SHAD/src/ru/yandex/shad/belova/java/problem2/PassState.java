@@ -1,7 +1,5 @@
 package ru.yandex.shad.belova.java.problem2;
 
-import ru.yandex.shad.belova.java.problem2.Card;
-
 public class PassState {
 
     public String  gatewayID;

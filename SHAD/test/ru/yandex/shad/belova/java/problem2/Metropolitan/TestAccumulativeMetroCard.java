@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 import org.mockito.Mockito;
 
 @RunWith(value = JUnit4.class)
-public class TestAccumulativeGateway {
+public class TestAccumulativeMetroCard {
 
     CardRegistry cardRegistry;
     AggregatedCardInfo aggregatedCardInfo;

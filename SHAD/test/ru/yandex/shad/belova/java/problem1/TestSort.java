@@ -2,7 +2,6 @@ package ru.yandex.shad.belova.java.problem1;
 
 import static org.junit.Assert.assertArrayEquals;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;

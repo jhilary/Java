@@ -8,7 +8,6 @@ import ru.yandex.shad.belova.java.problem2.PassState;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class CardRegistry {
 

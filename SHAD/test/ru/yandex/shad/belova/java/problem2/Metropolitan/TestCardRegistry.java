@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 
 @RunWith(value = JUnit4.class)
-public class TestCardConstruction {
+public class TestCardRegistry {
     CardRegistry cardRegistry;
 
     @Rule

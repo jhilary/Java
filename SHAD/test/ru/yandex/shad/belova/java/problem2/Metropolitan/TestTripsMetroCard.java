@@ -7,8 +7,6 @@ import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
 import ru.yandex.shad.belova.java.problem1.MyList;
 import ru.yandex.shad.belova.java.problem2.Card;
-import ru.yandex.shad.belova.java.problem2.Gateway;
-import ru.yandex.shad.belova.java.problem2.Metropolitan.CardRegistry;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(value = Parameterized.class)
-public class TestTripsGateway {
+public class TestTripsMetroCard {
 
     private Card.OwnerType ownerType;
     CardRegistry cardRegistry;
@@ -41,7 +39,7 @@ public class TestTripsGateway {
         return classes;
     }
 
-    public TestTripsGateway(Card.OwnerType ownerType) {
+    public TestTripsMetroCard(Card.OwnerType ownerType) {
         this.ownerType = ownerType;
     }
 
@@ -70,6 +68,6 @@ public class TestTripsGateway {
         MetroCard card = new MetroCard(this.aggregatedCardInfo,this.ownerType,
                 Card.UsageType.TRIPS,new TripCardProcessingStrategy(), this.cardRegistry);
         card.pay();
-        assertEquals(3,card.getCardInfo().getNumberOfTripsLeft());
+        assertEquals(3, card.getCardInfo().getNumberOfTripsLeft());
     }
 }

@@ -11,14 +11,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ilariyabelova
- * Date: 11/16/13
- * Time: 11:06 PM
- * To change this template use File | Settings | File Templates.
- */
-
 @RunWith(value = Parameterized.class)
 public class TestMedianPivot {
     private MyArrayList list;
