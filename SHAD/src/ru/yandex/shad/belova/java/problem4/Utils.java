@@ -1,5 +1,6 @@
 package ru.yandex.shad.belova.java.problem4;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +92,13 @@ public class Utils {
 
         @Override
         public void run() {
+//            System.err.println("Array: " + Arrays.toString(this.array) + "\n" +
+//                                "Astart: " + this.startIndexA + "\n" +
+//                                "Aend: " + this.endIndexA + "\n" +
+//                                "Bstart: " + this.startIndexB + "\n" +
+//                                "Bend: " + this.endIndexB + "\n" +
+//                                "ResultedArray: " + Arrays.toString(this.resultedArray) + "\n" +
+//                                "StartIndexResult: " + this.startIndexResult);
             pMerge(this.array,
                    this.startIndexA, this.endIndexA,
                    this.startIndexB, this.endIndexB,
@@ -98,8 +106,31 @@ public class Utils {
         }
     }
 
-    private static void pMerge(int[] array, int startIndexA, int endIndexA,
-                               int startIndexB, int endIndexB, int[] resultedArray, int startIndexResult){
+    private static class pMergeSortRunnable implements Runnable {
+        int[] array;
+        int startIndex;
+        int endIndex;
+        int[] resultedArray;
+        int startIndexResult;
+
+        private pMergeSortRunnable(int[] array, int startIndex, int endIndex, int[] resultedArray, int startIndexResult) {
+            this.array = array;
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+            this.resultedArray = resultedArray;
+            this.startIndexResult = startIndexResult;
+        }
+
+        @Override
+        public void run() {
+            pMergeSort(this.array, this.startIndex, this.endIndex, this.resultedArray, this.startIndexResult);
+        }
+    }
+
+    private static void pMerge(int[] array,
+                               int startIndexA, int endIndexA,
+                               int startIndexB, int endIndexB,
+                               int[] resultedArray, int startIndexResult){
 
         int lengthA = endIndexA - startIndexA + 1;
         int lengthB = endIndexB - startIndexB + 1;
@@ -123,10 +154,15 @@ public class Utils {
         int middleIndexInResultedArray = startIndexResult + (middleIndexOfArrayA - startIndexA) + (correspondingMiddleIndexOfArrayB - startIndexB);
         resultedArray[middleIndexInResultedArray] =
                 array[middleIndexOfArrayA];
-        //Thread t = new Thread(new pMergeRunnable(array, startIndexA, middleIndexOfArrayA - 1, startIndexB, correspondingMiddleIndexOfArrayB - 1, resultedArray, startIndexResult));
-        pMerge(array, startIndexA, middleIndexOfArrayA - 1, startIndexB, correspondingMiddleIndexOfArrayB - 1, resultedArray, startIndexResult);
+        Thread t = new Thread(new pMergeRunnable(array, startIndexA, middleIndexOfArrayA - 1, startIndexB, correspondingMiddleIndexOfArrayB - 1, resultedArray, startIndexResult));
+        //System.err.println("Start MergeRunnable: " + t.getName());
+        t.start();
         pMerge(array, middleIndexOfArrayA + 1, endIndexA, correspondingMiddleIndexOfArrayB, endIndexB, resultedArray, middleIndexInResultedArray + 1);
-
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Interrupted by user");
+        }
     }
 
     private static void pMergeSort(int[] array, int startIndex, int endIndex, int[] resultedArray, int startIndexResult){
@@ -140,9 +176,15 @@ public class Utils {
         int[] newResultArray = new int[endIndex - startIndex + 1];
         int middleIndexResult = middleIndex - startIndex;
 
-        pMergeSort(array, startIndex, middleIndex, newResultArray, 0);
+        Thread t = new Thread(new pMergeSortRunnable(array, startIndex, middleIndex, newResultArray, 0));
+        t.start();
+        //System.out.println("Start MergeSortRunnable: " + t.getName());
         pMergeSort(array, middleIndex + 1, endIndex, newResultArray, middleIndexResult + 1);
-
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Interrupted by user");
+        }
         pMerge(newResultArray, 0, middleIndexResult, middleIndexResult + 1, endIndex - startIndex,
                 resultedArray, startIndexResult);
     }
@@ -177,6 +219,12 @@ public class Utils {
     }
 
     public static void main(String[] args){
+        int[] array = new int[100];
+        for(int i = 0; i < array.length; i++){
+            array[i] = array.length - i;
+        }
+        System.out.println(timeMeasure(array,MergeSortMethods.STRAIGHT));
+        System.out.println(timeMeasure(array,MergeSortMethods.PARALLEL));
 
     }
 }
